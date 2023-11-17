@@ -1,0 +1,65 @@
+[gd_scene load_steps=7 format=3 uid="uid://dlrqugbmtcyqb"]
+
+[ext_resource type="Script" path="res://Scripts/ParallaxBackground.gd" id="1_rt1gk"]
+[ext_resource type="Texture2D" uid="uid://bxbsh7cqwxfqc" path="res://Textures/Background/Hills-1.png" id="2_s2g7v"]
+[ext_resource type="Texture2D" uid="uid://cuw0ubxlj3ugb" path="res://Textures/Background/Skyscrapers.png" id="3_hmew7"]
+[ext_resource type="Texture2D" uid="uid://civd6tqprn0kl" path="res://Textures/Background/Hills-2.png" id="4_v8cfo"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_u2iib"]
+load_path = "res://.godot/imported/Sky.png-396c53721078f764d2dea7e162a598ad.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_830nb"]
+load_path = "res://.godot/imported/Stars.png-57417b76dd26d79e2daf65617105b1c4.ctex"
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+script = ExtResource("1_rt1gk")
+
+[node name="Sky" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0, 0.1)
+motion_mirroring = Vector2(960, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Sky"]
+position = Vector2(0, -24)
+texture = SubResource("CompressedTexture2D_u2iib")
+region_enabled = true
+region_rect = Rect2(0, 0, 960, 540)
+
+[node name="Stars" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(960, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Stars"]
+position = Vector2(0, -24)
+texture = SubResource("CompressedTexture2D_830nb")
+region_enabled = true
+region_rect = Rect2(0, 0, 960, 540)
+
+[node name="Hills-1" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.15, 0.15)
+motion_mirroring = Vector2(960, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Hills-1"]
+position = Vector2(0, -24)
+texture = ExtResource("2_s2g7v")
+region_enabled = true
+region_rect = Rect2(0, 0, 960, 540)
+
+[node name="Skyscrapers" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.2, 0.2)
+motion_mirroring = Vector2(960, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Skyscrapers"]
+position = Vector2(0, -24)
+texture = ExtResource("3_hmew7")
+region_enabled = true
+region_rect = Rect2(0, 0, 960, 540)
+
+[node name="Hills-2" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.3, 0.3)
+motion_mirroring = Vector2(960, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Hills-2"]
+position = Vector2(0, -24)
+texture = ExtResource("4_v8cfo")
+region_enabled = true
+region_rect = Rect2(0, 0, 960, 540)

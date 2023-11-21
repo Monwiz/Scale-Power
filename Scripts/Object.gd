@@ -2,7 +2,7 @@ extends RigidBody2D
 
 
 var rects: Array
-var active_rect_id: int = 0
+var active_rect_id: int
 @export var size: Vector2
 
 func get_minimal_position_x():
@@ -11,7 +11,7 @@ func get_minimal_position_x():
 		var current_zone = rect.get_parent()
 		if current_zone.get_global_rect().intersects(rect.get_global_rect()):
 			while not current_zone.get_meta("left_border"):
-				for zone in $/root/Game/Area2D/SizableZones.get_children():
+				for zone in $/root/Game/Level/SizableZones.get_children():
 					if zone.get_global_rect().has_point(Vector2(current_zone.global_position.x-1,current_zone.global_position.y)):
 						current_zone = zone
 						break
@@ -23,7 +23,7 @@ func get_minimal_position_y():
 		var current_zone = rect.get_parent()
 		if current_zone.get_global_rect().intersects(rect.get_global_rect()):
 			while not current_zone.get_meta("upper_border"):
-				for zone in $/root/Game/Area2D/SizableZones.get_children():
+				for zone in $/root/Game/Level/SizableZones.get_children():
 					if zone.get_global_rect().has_point(Vector2(current_zone.global_position.x,current_zone.global_position.y-1)):
 						current_zone = zone
 						break
@@ -35,7 +35,7 @@ func get_maximal_position_x():
 		var current_zone = rect.get_parent()
 		if current_zone.get_global_rect().intersects(rect.get_global_rect()):
 			while not current_zone.get_meta("right_border"):
-				for zone in $/root/Game/Area2D/SizableZones.get_children():
+				for zone in $/root/Game/Level/SizableZones.get_children():
 					if zone.get_global_rect().has_point(Vector2(current_zone.global_position.x+current_zone.size.x,current_zone.global_position.y)):
 						current_zone = zone
 						break
@@ -47,7 +47,7 @@ func get_maximal_position_y():
 		var current_zone = rect.get_parent()
 		if current_zone.get_global_rect().intersects(rect.get_global_rect()):
 			while not current_zone.get_meta("bottom_border"):
-				for zone in $/root/Game/Area2D/SizableZones.get_children():
+				for zone in $/root/Game/Level/SizableZones.get_children():
 					if zone.get_global_rect().has_point(Vector2(current_zone.global_position.x,current_zone.global_position.y+current_zone.size.y)):
 						current_zone = zone
 						break
@@ -57,7 +57,7 @@ func get_maximal_position_y():
 func get_upper_left_corner():
 	var minimal_x: int = -9999
 	var minimal_y: int = -9999
-	for zone in $/root/Game/Area2D/SizableZones.get_children():
+	for zone in $/root/Game/Level/SizableZones.get_children():
 		if zone.get_global_rect().has_point(get_global_position()-size/2):
 			if zone.get_meta("upper_left_corner"):
 				minimal_x = zone.global_position.x
@@ -67,7 +67,7 @@ func get_upper_left_corner():
 func get_upper_right_corner():
 	var maximal_x: int = 9999
 	var minimal_y: int = -9999
-	for zone in $/root/Game/Area2D/SizableZones.get_children():
+	for zone in $/root/Game/Level/SizableZones.get_children():
 		if zone.get_global_rect().has_point(Vector2(get_global_position().x+size.x/2-1,get_global_position().y-size.y/2)):
 			if zone.get_meta("upper_right_corner"):
 				maximal_x = zone.global_position.x+zone.size.x-1
@@ -77,7 +77,7 @@ func get_upper_right_corner():
 func get_bottom_left_corner():
 	var minimal_x: int = -9999
 	var maximal_y: int = 9999
-	for zone in $/root/Game/Area2D/SizableZones.get_children():
+	for zone in $/root/Game/Level/SizableZones.get_children():
 		if zone.get_global_rect().has_point(Vector2(get_global_position().x-size.x/2,get_global_position().y+size.y/2-1)):
 			if zone.get_meta("bottom_left_corner"):
 				minimal_x = zone.global_position.x
@@ -87,7 +87,7 @@ func get_bottom_left_corner():
 func get_bottom_right_corner():
 	var maximal_x: int = 9999
 	var maximal_y: int = 9999
-	for zone in $/root/Game/Area2D/SizableZones.get_children():
+	for zone in $/root/Game/Level/SizableZones.get_children():
 		if zone.get_global_rect().has_point(get_global_position()+size/2-Vector2.ONE):
 			if zone.get_meta("bottom_right_corner"):
 				maximal_x = zone.global_position.x+zone.size.x-1
@@ -96,12 +96,12 @@ func get_bottom_right_corner():
 	return Vector2(maximal_x,maximal_y)
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var rectBase = $/root/Game/Area2D/NinePatchRect.duplicate()
+	var rectBase = $/root/Game/Level/NinePatchRect.duplicate()
 	rectBase.size = round(size)+Vector2(1,1)
 	rectBase.visible = true
 	rectBase.process_mode = Node.PROCESS_MODE_INHERIT
 	#rectBase.z_index = 1
-	for zone in $/root/Game/Area2D/SizableZones.get_children():
+	for zone in $/root/Game/Level/SizableZones.get_children():
 		var rect = rectBase.duplicate()
 		rect.set_parent_object(self)
 		rect.global_position = round(global_position - rect.size/2)
@@ -140,7 +140,7 @@ func _process(delta):
 	if holding not in [0,-1]:
 		if active_rect.size - Vector2(1,1) != round(size):
 			size = active_rect.size - Vector2(1,1)
-			mass = max(size.x*size.y/51200, 0.01)
+			mass = max(size.x*size.y/512, 1)
 			$Sprite2D.scale = size/16
 			$Collision.scale = size/16
 			$Collision.global_position = active_rect.global_position + active_rect.size/2

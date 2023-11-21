@@ -47,7 +47,6 @@ func die():
 	set_physics_process(false)
 	collision_layer = 0
 
-
 func _on_area_2d_body_entered(body):
 	if body != self and body.has_method("hurt"):
 		body.hurt(100)

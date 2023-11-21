@@ -22,14 +22,9 @@ func set_corner_color(color: Color, corner: int):
 		2: $UpRight.color = color
 		3: $DownLeft.color = color
 		4: $DownRight.color = color
-		
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	#up_left_corner    = Rect2(global_position.x,			global_position.y, 3, 3)
 	#up_right_corner   = Rect2(global_position.x+size.x-3,	global_position.y, 3, 3)
 	#down_left_corner  = Rect2(global_position.x,   global_position.y+size.y-3, 3, 3)

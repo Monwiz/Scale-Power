@@ -1,10 +1,11 @@
 extends CharacterBody2D
 
 
-const SPEED = 100.0
+const SPEED = 125.0
 const JUMP_VELOCITY = -220.0
 @export_range(1,50) var health: int = 3
 @export_range(0,100) var bullets: int
+var timer = 0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -12,9 +13,12 @@ var is_small: bool = false
 var is_dead = false
 var can_move_vertical: bool = true
 var moving_vertical: bool = false
+@export var can_interact_with_back_layer: bool
 #var on_the_backside: bool = false
 
 func _process(delta):
+	timer -= delta
+		
 	if is_dead:
 		$Sprite.modulate.a -= 8*delta
 		if $Sprite.modulate.a <= 0:
@@ -31,26 +35,34 @@ func _process(delta):
 			scale.y = max(scale.y-delta, 0.5)
 			$Camera2D.zoom = Vector2(2,2) / scale
 			if scale.x == 0.5:
-				moving_vertical = false
 				$Sprite.play("back")
-				set_physics_process(true)
-				collision_mask = 3
+				collision_mask = 3 if can_interact_with_back_layer else 2
+				collision_layer = 2
 				$Bullet/Area2D.collision_mask = 3
-				$Bullet.scale = scale
+				z_index = -1
 				$Bullet.z_index = -3
+				
+				$Bullet.scale = scale
+				moving_vertical = false
+				set_physics_process(true)
 		else:
 			scale.x = min(scale.x+delta, 1)
 			scale.y = min(scale.y+delta, 1)
 			$Camera2D.zoom = Vector2(2,2) / scale
 			if scale.x == 1:
-				moving_vertical = false
 				$Sprite.play("front")
-				set_physics_process(true)
 				collision_mask = 1
+				collision_layer = 1
 				$Bullet/Area2D.collision_mask = 1
-				$Bullet.scale = scale
+				z_index = 0
 				$Bullet.z_index = -1
-	elif Input.is_action_just_pressed("shoot") and bullets > 0 and not $Sprite.animation in ["front","back"]:
+				
+				$Bullet.scale = scale
+				moving_vertical = false
+				set_physics_process(true)
+	elif Input.is_action_just_pressed("shoot") and bullets > 0 and\
+	not $Sprite.animation in ["front","back"] and timer < 0:
+		timer = 0.25
 		bullets -= 1
 		var bullet = $Bullet.duplicate()
 		var looking_right = $Sprite.animation in ["moving_right","right"]
@@ -67,18 +79,16 @@ func _physics_process(delta):
 		$Sprite.play("back" if vdirection < 0 else "front")
 		velocity.x = 0
 		if is_small != (vdirection < 0):
-			if vdirection < 0:
-				if $"../BackLayer".get_cell_tile_data(1, Vector2(round(position.x/8),round((position.y+8)/8))):
+			if $"../BackLayer".get_cell_tile_data(1, Vector2(round(position.x/8),round((position.y+5)/8))):
+				if vdirection < 0:
 					is_small = true
 					$Sprite.play("moving_back")
-					moving_vertical = true
-					set_physics_process(false)
-			else:
-				if $"../BackLayer".get_cell_tile_data(1, Vector2(round(position.x/8),round((position.y+8)/8))):
+				else:
 					is_small = false
 					$Sprite.play("moving_front")
-					moving_vertical = true
-					set_physics_process(false)
+				moving_vertical = true
+				set_physics_process(false)
+				
 	elif hdirection and not moving_vertical:
 		velocity.x = hdirection * SPEED * scale.x
 		$Sprite.play("moving_left" if hdirection < 0 else "moving_right")
@@ -93,14 +103,14 @@ func _physics_process(delta):
 		$Sprite.stop()
 	else:
 		# Handle Jump.
-		if Input.is_action_just_pressed("jump"):
+		if Input.is_action_just_pressed("jump") and not moving_vertical:
 			velocity.y += JUMP_VELOCITY * scale.y
 	move_and_slide()
 
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		if collision.get_collider() is RigidBody2D:
-			collision.get_collider().apply_central_impulse(-2*collision.get_normal())#15*position.direction_to(collision.get_collider().position))
+			collision.get_collider().apply_central_impulse(-200*collision.get_normal())#15*position.direction_to(collision.get_collider().position))
 
 func hurt(damage: int = 1):
 	health -= damage
@@ -111,3 +121,5 @@ func die():
 	set_physics_process(false)
 	collision_layer = 0
 	$GPUParticles2D.emitting = true
+
+func add_bullets(value: int): bullets += value

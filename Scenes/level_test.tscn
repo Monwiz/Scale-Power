@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://ev1qjdhh1b7j"]
+[gd_scene load_steps=74 format=3 uid="uid://ev1qjdhh1b7j"]
 
 [ext_resource type="Texture2D" uid="uid://b5i6ibr7rgt6x" path="res://Textures/Blocks.png" id="1_qdauv"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="2_xpss5"]
@@ -296,18 +296,14 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_shm68"]
 size = Vector2(13, 32)
 
-[sub_resource type="Gradient" id="Gradient_aglsn"]
+[sub_resource type="Gradient" id="Gradient_0xqsf"]
+offsets = PackedFloat32Array(0, 0.502618, 0.513089, 1)
+colors = PackedColorArray(0.259294, 0.259294, 0.259294, 1, 0.537011, 0.537011, 0.537011, 1, 0.834273, 0.61789, 0.393841, 1, 0.933333, 0.764706, 0.603922, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_t1ljj"]
-gradient = SubResource("Gradient_aglsn")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_pms3h"]
+gradient = SubResource("Gradient_0xqsf")
 
-[sub_resource type="Gradient" id="Gradient_rgqth"]
-colors = PackedColorArray(0.259294, 0.259294, 0.259294, 1, 0.537011, 0.537011, 0.537011, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_ud3f6"]
-gradient = SubResource("Gradient_rgqth")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h2ils"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ogkoj"]
 particle_flag_disable_z = true
 direction = Vector3(0, -1, 0)
 spread = 90.0
@@ -316,8 +312,7 @@ initial_velocity_max = 105.69
 orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
 scale_max = 4.0
-color_ramp = SubResource("GradientTexture1D_ud3f6")
-color_initial_ramp = SubResource("GradientTexture1D_t1ljj")
+color_initial_ramp = SubResource("GradientTexture1D_pms3h")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_nqedk"]
 
@@ -446,9 +441,10 @@ shape = SubResource("RectangleShape2D_shm68")
 zoom = Vector2(2, 2)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Player"]
+position = Vector2(1, 0)
 emitting = false
 amount = 32
-process_material = SubResource("ParticleProcessMaterial_h2ils")
+process_material = SubResource("ParticleProcessMaterial_ogkoj")
 lifetime = 5.0
 one_shot = true
 explosiveness = 1.0

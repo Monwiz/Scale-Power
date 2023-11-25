@@ -15,7 +15,7 @@ func get_minimal_position_x():
 					if zone.get_global_rect().has_point(Vector2(current_zone.global_position.x-1,current_zone.global_position.y)):
 						current_zone = zone
 						break
-			minimal_x = max(minimal_x, current_zone.global_position.x)
+			minimal_x = max(minimal_x, current_zone.global_position.x+1)
 	return minimal_x
 func get_minimal_position_y():
 	var minimal_y: int = -9999
@@ -27,7 +27,7 @@ func get_minimal_position_y():
 					if zone.get_global_rect().has_point(Vector2(current_zone.global_position.x,current_zone.global_position.y-1)):
 						current_zone = zone
 						break
-			minimal_y = max(minimal_y, current_zone.global_position.y)
+			minimal_y = max(minimal_y, current_zone.global_position.y+1)
 	return minimal_y
 func get_maximal_position_x():
 	var maximal_x: int = 9999
@@ -60,8 +60,8 @@ func get_upper_left_corner():
 	for zone in $/root/Game/Level/SizableZones.get_children():
 		if zone.get_global_rect().has_point(get_global_position()-size/2):
 			if zone.get_meta("upper_left_corner"):
-				minimal_x = zone.global_position.x
-				minimal_y = zone.global_position.y
+				minimal_x = zone.global_position.x+1
+				minimal_y = zone.global_position.y+1
 			break
 	return Vector2(minimal_x,minimal_y)
 func get_upper_right_corner():
@@ -71,7 +71,7 @@ func get_upper_right_corner():
 		if zone.get_global_rect().has_point(Vector2(get_global_position().x+size.x/2-1,get_global_position().y-size.y/2)):
 			if zone.get_meta("upper_right_corner"):
 				maximal_x = zone.global_position.x+zone.size.x-1
-				minimal_y = zone.global_position.y
+				minimal_y = zone.global_position.y+1
 			break
 	return Vector2(maximal_x,minimal_y)
 func get_bottom_left_corner():
@@ -80,7 +80,7 @@ func get_bottom_left_corner():
 	for zone in $/root/Game/Level/SizableZones.get_children():
 		if zone.get_global_rect().has_point(Vector2(get_global_position().x-size.x/2,get_global_position().y+size.y/2-1)):
 			if zone.get_meta("bottom_left_corner"):
-				minimal_x = zone.global_position.x
+				minimal_x = zone.global_position.x+1
 				maximal_y = zone.global_position.y+zone.size.y-1
 			break
 	return Vector2(minimal_x,maximal_y)
@@ -110,7 +110,7 @@ func _ready():
 	rectBase.free()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	var active_rect = rects[active_rect_id]
 	var holding = active_rect.get_holding()
 	var pos
@@ -140,7 +140,7 @@ func _process(delta):
 	if holding not in [0,-1]:
 		if active_rect.size - Vector2(1,1) != round(size):
 			size = active_rect.size - Vector2(1,1)
-			mass = max(size.x*size.y/512, 1)
+			mass = max(size.x*size.y/256, 1)
 			$Sprite2D.scale = size/16
 			$Collision.scale = size/16
 			$Collision.global_position = active_rect.global_position + active_rect.size/2
@@ -159,4 +159,3 @@ func _process(delta):
 			rect.size = round(size) + Vector2(1,1)
 			rect.global_position = round(global_position - rect.size/2)
 		linear_velocity.x = clamp(linear_velocity.x, -1, 1) #dirty hack, I'm not able to fix the problem behind it
-

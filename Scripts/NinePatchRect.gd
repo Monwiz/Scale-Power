@@ -92,65 +92,65 @@ func _process(_delta):
 				global_position.x = upper_left.x
 				size.y -= upper_left.y-global_position.y
 				global_position.y = upper_left.y
-			elif mpos.x < bottom_left.x and mpos.y > bottom_left.y:
+			elif mpos.x < bottom_left.x and mpos.y > bottom_left.y-1:
 				size.x -= bottom_left.x-global_position.x
 				global_position.x = bottom_left.x
-				size.y += bottom_left.y-global_position.y
-				global_position.y = bottom_left.y
-			elif mpos.x > upper_right.x and mpos.y < upper_right.y:
-				size.x += upper_right.x-global_position.x
-				global_position.x = upper_right.x
+				size.y += bottom_left.y-global_position.y-1
+				global_position.y = bottom_left.y-1
+			elif mpos.x > upper_right.x-1 and mpos.y < upper_right.y:
+				size.x += upper_right.x-global_position.x-1
+				global_position.x = upper_right.x-1
 				size.y -= upper_right.y-global_position.y
 				global_position.y = upper_right.y
-			elif mpos.x > bottom_right.x and mpos.y > bottom_right.y:
-				size.x += bottom_right.x-global_position.x
-				global_position.x = bottom_right.x
-				size.y += bottom_right.y-global_position.y
-				global_position.y = bottom_right.y
+			elif mpos.x > bottom_right.x-1 and mpos.y > bottom_right.y-1:
+				size.x += bottom_right.x-global_position.x-1
+				global_position.x = bottom_right.x-1
+				size.y += bottom_right.y-global_position.y-1
+				global_position.y = bottom_right.y-1
 			else:
 				if mpos.x < min_x:
 					size.x -= min_x-global_position.x
 					global_position.x = min_x
-				elif mpos.x > max_x:
-					size.x += max_x-global_position.x
-					global_position.x = max_x
+				elif mpos.x > max_x-1:
+					size.x += max_x-global_position.x-1
+					global_position.x = max_x-1
 				else: size.x += global_position.x - mpos.x; global_position.x = mpos.x
 				if mpos.y < min_y:
 					size.y -= min_y-global_position.y
 					global_position.y = min_y
-				elif mpos.y > max_y:
-					size.y += max_y-global_position.y
-					global_position.y = max_y
+				elif mpos.y > max_y-1:
+					size.y += max_y-global_position.y-1
+					global_position.y = max_y-1
 				else: size.y += global_position.y - mpos.y; global_position.y = mpos.y
 		2:
-			if mpos.x < upper_left.x and mpos.y < upper_left.y:
-				size.x = upper_left.x - global_position.x
+			if mpos.x < upper_left.x+1 and mpos.y < upper_left.y:
+				size.x = upper_left.x + 1 - global_position.x
 				size.y -= upper_left.y-global_position.y
 				global_position.y = upper_left.y
-			elif mpos.x < bottom_left.x and mpos.y > bottom_left.y:
-				size.x = bottom_left.x - global_position.x
-				size.y += bottom_left.y-global_position.y
-				global_position.y = bottom_left.y
+			elif mpos.x < bottom_left.x+1 and mpos.y > bottom_left.y-1:
+				size.x = bottom_left.x + 1 - global_position.x
+				size.y += bottom_left.y-1-global_position.y
+				global_position.y = bottom_left.y-1
 			elif mpos.x > upper_right.x and mpos.y < upper_right.y:
 				size.x = upper_right.x - global_position.x
 				size.y -= upper_right.y-global_position.y
 				global_position.y = upper_right.y
-			elif mpos.x > bottom_right.x and mpos.y > bottom_right.y:
+			elif mpos.x > bottom_right.x and mpos.y > bottom_right.y-1:
 				size.x = bottom_right.x - global_position.x
-				size.y += bottom_right.y-global_position.y
+				size.y += bottom_right.y-1-global_position.y
 				global_position.y = bottom_right.y
 			else:
-				if mpos.x < min_x:
-					size.x = min_x - global_position.x
+				if mpos.x < min_x+1:
+					size.x = min_x+1 - global_position.x
 				elif mpos.x > max_x:
 					size.x = max_x - global_position.x
 				else: size.x = mpos.x - global_position.x
 				if mpos.y < min_y:
 					size.y -= min_y-global_position.y
 					global_position.y = min_y
-				elif mpos.y > max_y:
-					size.y += max_y-global_position.y
-					global_position.y = max_y
+				elif mpos.y > max_y-1:
+					size.y += max_y-1-global_position.y
+					global_position.y = max_y-1
 				else: size.y += global_position.y - mpos.y; global_position.y = mpos.y
 		3:
 			if mpos.x < upper_left.x and mpos.y < upper_left.y:

@@ -24,22 +24,24 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
-	if is_on_ceiling():
-		speed *= -1
-		scale.x *= -1
-		up_direction.x *= -1
-	# Handle Jump.
-	#if is_on_floor():
-	#	velocity.y = JUMP_VELOCITY
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	velocity.x = speed
-
+	velocity.x = speed * delta * 100
+	if not $FreeSpaceChecker.has_overlapping_bodies():
+		change_direction()
+		
+	for i in range(get_slide_collision_count()):
+		var collision = get_slide_collision(i)
+		if (collision.get_normal().x > 0 and $SpriteCenter.scale.x < 0) or (collision.get_normal().x < 0 and $SpriteCenter.scale.x > 0):
+			change_direction()
 	move_and_slide()
 
-func hurt(damage: int = 1):
-	health -= damage
+func change_direction():
+	speed *= -1
+	$SpriteCenter.scale.x *= -1
+	$DeathZone.scale.x *= -1
+	$FreeSpaceChecker.scale.x *= -1
+	
+func hurt():
+	health -= 1
 	modulate = Color(4,4,4)
 
 func die():
@@ -47,6 +49,6 @@ func die():
 	set_physics_process(false)
 	collision_layer = 0
 
-func _on_area_2d_body_entered(body):
+func _on_death_zone_body_entered(body):
 	if body != self and body.has_method("hurt"):
-		body.hurt(100)
+		body.hurt()

@@ -1,5 +1,6 @@
 extends Node2D
 
+const LAST_LEVEL_ID = 2
 var timer_seconds: float = 0
 var level_id = 0
 var is_timer_on: bool = true
@@ -16,12 +17,13 @@ func _process(delta):
 	if is_timer_on: timer_seconds += delta
 
 func load_level(number: int):
-	level_id = number
-	if get_node_or_null("Level"):
-		$Level.name = "is_queued_for_deletion"
-		$is_queued_for_deletion.queue_free()
-	var level = load("res://Scenes/level_"+str(number)+".tscn")
-	call_deferred("add_child", level.instantiate())
+	if number <= LAST_LEVEL_ID:
+		level_id = number
+		if get_node_or_null("Level"):
+			$Level.name = "is_queued_for_deletion"
+			$is_queued_for_deletion.queue_free()
+		var level = load("res://Scenes/level_"+str(number)+".tscn")
+		call_deferred("add_child", level.instantiate())
 	
 func load_next_level():
 	load_level(level_id+1)

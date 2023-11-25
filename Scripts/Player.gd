@@ -3,9 +3,9 @@ extends CharacterBody2D
 
 const SPEED = 125.0
 const JUMP_VELOCITY = -220.0
-@export_range(1,50) var health: int = 3
 @export_range(0,100) var bullets: int
 var timer = 0
+@export_range(-10,10) var movement_time: float
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -14,7 +14,14 @@ var is_dead = false
 var can_move_vertical: bool = true
 var moving_vertical: bool = false
 @export var can_interact_with_back_layer: bool
+var no_return_of_process: bool = false #For level end animation
 #var on_the_backside: bool = false
+
+func _ready():
+	if movement_time != 0:
+		set_physics_process(false)
+		$Sprite.animation = "moving_right" if movement_time > 0 else "moving_left"
+		$Sprite.play()
 
 func _process(delta):
 	timer -= delta
@@ -26,14 +33,27 @@ func _process(delta):
 	if $Sprite.modulate.r > 1:
 		$Sprite.modulate = Color($Sprite.modulate.r-16*delta,$Sprite.modulate.g-16*delta,$Sprite.modulate.b-16*delta,$Sprite.modulate.a)
 	else: $Sprite.modulate = Color(1,1,1,$Sprite.modulate.a)
-	if health <= 0:
-		die()
 		
+	if movement_time != 0:
+		if movement_time > 0:
+			move_local_x(SPEED * scale.x / 2 * delta)
+			movement_time = max(movement_time-delta, 0)
+		else:
+			move_local_x(SPEED * scale.x / -2 * delta)
+			movement_time = min(movement_time+delta, 0)
+			
+		if movement_time == 0:
+			if not no_return_of_process:
+				set_physics_process(true)
+			else:
+				set_process(false)
+		return
 	if moving_vertical:
 		if is_small:
 			scale.x = max(scale.x-delta, 0.5)
 			scale.y = max(scale.y-delta, 0.5)
 			$Camera2D.zoom = Vector2(2,2) / scale
+			$Camera2D.offset.y = -64 * scale.y
 			if scale.x == 0.5:
 				$Sprite.play("back")
 				collision_mask = 3 if can_interact_with_back_layer else 2
@@ -49,6 +69,7 @@ func _process(delta):
 			scale.x = min(scale.x+delta, 1)
 			scale.y = min(scale.y+delta, 1)
 			$Camera2D.zoom = Vector2(2,2) / scale
+			$Camera2D.offset.y = -64 * scale.y
 			if scale.x == 1:
 				$Sprite.play("front")
 				collision_mask = 1
@@ -66,13 +87,11 @@ func _process(delta):
 		bullets -= 1
 		var bullet = $Bullet.duplicate()
 		var looking_right = $Sprite.animation in ["moving_right","right"]
-		bullet.init(looking_right, 500*scale.x, true)
+		bullet.init(self, looking_right, 500*scale.x)
 		bullet.global_position = Vector2($Bullet.global_position.x + scale.x * (9 if looking_right else -9), $Bullet.global_position.y)
 		get_parent().add_child(bullet)
 
 func _physics_process(delta):
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	var hdirection = Input.get_axis("ui_left", "ui_right")
 	var vdirection = Input.get_axis("ui_up", "ui_down")
 	if can_move_vertical and vdirection:
@@ -110,11 +129,11 @@ func _physics_process(delta):
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		if collision.get_collider() is RigidBody2D:
-			collision.get_collider().apply_central_impulse(-200*collision.get_normal())#15*position.direction_to(collision.get_collider().position))
-
-func hurt(damage: int = 1):
-	health -= damage
-	$Sprite.modulate = Color(4,4,4)
+			collision.get_collider().apply_central_impulse(-200*collision.get_normal())
+			
+	if global_position.y > 260: die()
+	
+func hurt(): die()
 
 func die():
 	is_dead = true
@@ -123,3 +142,11 @@ func die():
 	$GPUParticles2D.emitting = true
 
 func add_bullets(value: int): bullets += value
+func move(time: float, dont_return_process_after_movement: bool = false):
+	set_physics_process(false)
+	velocity = Vector2.ZERO
+	movement_time = time
+	$Sprite.animation = "moving_right" if movement_time > 0 else "moving_left"
+	$Sprite.play()
+	no_return_of_process = dont_return_process_after_movement
+	

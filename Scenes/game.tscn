@@ -9,7 +9,7 @@ metadata/_edit_horizontal_guides_ = [32.0, 73.0]
 metadata/_edit_vertical_guides_ = [138.0, 113.0]
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("1_5svmq")]
-offset = Vector2(1024, -64)
+offset = Vector2(1024, 16)
 scale = Vector2(2, 2)
-transform = Transform2D(2, 0, 0, 2, 1024, -64)
+transform = Transform2D(2, 0, 0, 2, 1024, 16)
 scroll_ignore_camera_zoom = true

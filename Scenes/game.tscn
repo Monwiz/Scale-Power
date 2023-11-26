@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://b67vtosq0tysw"]
+[gd_scene load_steps=8 format=3 uid="uid://b67vtosq0tysw"]
 
 [ext_resource type="PackedScene" uid="uid://dlrqugbmtcyqb" path="res://Scenes/parallax_background.tscn" id="1_5svmq"]
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_jw81k"]
+[ext_resource type="AudioStream" uid="uid://d2oe8kiljfr84" path="res://Audio/Music/menu.wav" id="3_pr5ad"]
+[ext_resource type="AudioStream" uid="uid://csbvrf3b274bg" path="res://Audio/Click.wav" id="3_ubxs5"]
+[ext_resource type="AudioStream" uid="uid://bpwbvw4h050ot" path="res://Audio/Music/music.wav" id="4_k7q7n"]
+[ext_resource type="AudioStream" uid="uid://bjf2xhxmk7fvo" path="res://Audio/HidingScreen.wav" id="4_xr6pt"]
+[ext_resource type="AudioStream" uid="uid://dgsgmbhrbo5c" path="res://Audio/ShowingScreen.wav" id="5_ff3n8"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_jw81k")
@@ -13,3 +18,23 @@ offset = Vector2(1024, 16)
 scale = Vector2(2, 2)
 transform = Transform2D(2, 0, 0, 2, 1024, 16)
 scroll_ignore_camera_zoom = true
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="Music" type="Node" parent="Audio"]
+
+[node name="Menu" type="AudioStreamPlayer" parent="Audio/Music"]
+stream = ExtResource("3_pr5ad")
+autoplay = true
+
+[node name="N1" type="AudioStreamPlayer" parent="Audio/Music"]
+stream = ExtResource("4_k7q7n")
+
+[node name="Click" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("3_ubxs5")
+
+[node name="HidingScreen" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("4_xr6pt")
+
+[node name="ShowingScreen" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("5_ff3n8")

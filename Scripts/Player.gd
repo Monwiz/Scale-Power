@@ -18,6 +18,8 @@ var no_return_of_process: bool = false #For level end animation
 #var on_the_backside: bool = false
 
 func _ready():
+	$Audio/Step.play(0) #Set playback position to 0
+	$Audio/Step.stream_paused = true
 	if movement_time != 0:
 		set_physics_process(false)
 		$Sprite.animation = "moving_right" if movement_time > 0 else "moving_left"
@@ -35,6 +37,7 @@ func _process(delta):
 	else: $Sprite.modulate = Color(1,1,1,$Sprite.modulate.a)
 		
 	if movement_time != 0:
+		play_step_sounds()
 		if movement_time > 0:
 			move_local_x(SPEED * scale.x / 2 * delta)
 			movement_time = max(movement_time-delta, 0)
@@ -43,10 +46,11 @@ func _process(delta):
 			movement_time = min(movement_time+delta, 0)
 			
 		if movement_time == 0:
-			if not no_return_of_process:
-				set_physics_process(true)
-			else:
+			if no_return_of_process:
 				set_process(false)
+			else:
+				set_physics_process(true)
+			stop_step_sounds()
 		return
 	if moving_vertical:
 		if is_small:
@@ -83,47 +87,45 @@ func _process(delta):
 				set_physics_process(true)
 	elif Input.is_action_just_pressed("shoot") and bullets > 0 and\
 	not $Sprite.animation in ["front","back"] and timer < 0:
-		timer = 0.25
-		bullets -= 1
-		var bullet = $Bullet.duplicate()
-		var looking_right = $Sprite.animation in ["moving_right","right"]
-		bullet.init(self, looking_right, 500*scale.x)
-		bullet.global_position = Vector2($Bullet.global_position.x + scale.x * (9 if looking_right else -9), $Bullet.global_position.y)
-		get_parent().add_child(bullet)
+		shoot()
 
 func _physics_process(delta):
 	var hdirection = Input.get_axis("ui_left", "ui_right")
 	var vdirection = Input.get_axis("ui_up", "ui_down")
 	if can_move_vertical and vdirection:
-		$Sprite.play("back" if vdirection < 0 else "front")
 		velocity.x = 0
-		if is_small != (vdirection < 0):
-			if $"../BackLayer".get_cell_tile_data(1, Vector2(round(position.x/8),round((position.y+5)/8))):
-				if vdirection < 0:
-					is_small = true
-					$Sprite.play("moving_back")
-				else:
-					is_small = false
-					$Sprite.play("moving_front")
-				moving_vertical = true
-				set_physics_process(false)
+		if is_small != (vdirection < 0) and is_on_bridge():
+			if vdirection < 0:
+				is_small = true
+				$Sprite.play("moving_back")
+			else:
+				is_small = false
+				$Sprite.play("moving_front")
+			moving_vertical = true
+			set_physics_process(false)
+			play_step_sounds()
+		else: 
+			$Sprite.play("back" if vdirection < 0 else "front")
+			stop_step_sounds()
 				
 	elif hdirection and not moving_vertical:
 		velocity.x = hdirection * SPEED * scale.x
 		$Sprite.play("moving_left" if hdirection < 0 else "moving_right")
+		play_step_sounds()
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED * scale.x)
 		if $Sprite.animation == "moving_left": $Sprite.play("left")
 		elif $Sprite.animation == "moving_right": $Sprite.play("right")
+		stop_step_sounds()
 
-	# Add the gravity.
-	if not is_on_floor():
-		velocity.y += gravity * delta * scale.y
-		$Sprite.stop()
-	else:
-		# Handle Jump.
+	if is_on_floor():
 		if Input.is_action_just_pressed("jump") and not moving_vertical:
 			velocity.y += JUMP_VELOCITY * scale.y
+			$Audio/Jump.play()
+	else:
+		velocity.y += gravity * delta * scale.y
+		$Sprite.stop()
+		stop_step_sounds()
 	move_and_slide()
 
 	for i in get_slide_collision_count():
@@ -133,6 +135,27 @@ func _physics_process(delta):
 			
 	if global_position.y > 260: die()
 	
+func is_on_bridge() -> bool:
+	return $"../BackLayer".get_cell_tile_data(
+		1, Vector2(round(position.x/8),round((position.y+5)/8))) != null
+	
+func play_step_sounds():
+	$Audio/Step.stream_paused = false
+func stop_step_sounds():
+	if $Audio/Step.playing:
+		$Audio/Step.play(0) #Set playback position to 0
+		$Audio/Step.stream_paused = true
+	
+func shoot():
+	timer = 0.25
+	bullets -= 1
+	var bullet = $Bullet.duplicate()
+	var looking_right = $Sprite.animation in ["moving_right","right"]
+	bullet.init(self, looking_right, 500*scale.x)
+	bullet.global_position = Vector2($Bullet.global_position.x + scale.x * (9 if looking_right else -9), $Bullet.global_position.y)
+	get_parent().add_child(bullet)
+	$Audio/Shot.play()
+	
 func hurt(): die()
 
 func die():
@@ -140,8 +163,12 @@ func die():
 	set_physics_process(false)
 	collision_layer = 0
 	$GPUParticles2D.emitting = true
+	$Audio/Death.play()
 
-func add_bullets(value: int): bullets += value
+func add_bullets(value: int):
+	bullets += value
+	$Audio/PickingUp.play()
+	
 func move(time: float, dont_return_process_after_movement: bool = false):
 	set_physics_process(false)
 	velocity = Vector2.ZERO

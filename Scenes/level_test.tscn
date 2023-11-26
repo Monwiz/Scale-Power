@@ -431,7 +431,7 @@ shape = SubResource("RectangleShape2D_7trsq")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Player"]
 sprite_frames = SubResource("SpriteFrames_lyax2")
-animation = &"moving_right"
+animation = &"right"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(0.5, 0)

@@ -23,11 +23,13 @@ func _process(delta):
 func hurt():
 	health -= 1
 	modulate = Color(4,4,4)
+	$Audio/Hit.play()
 
 func die():
 	is_dead = true
 	set_physics_process(false)
 	collision_layer = 0
+	$Audio/Destruction.play()
 
 func _on_area_2d_body_entered(body):
 	if body != self:

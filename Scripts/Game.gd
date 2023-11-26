@@ -11,6 +11,8 @@ func reset_timer(): timer_seconds = 0
 
 func _ready():
 	load_level(1)
+	$Audio/Music/Menu.stop()
+	$Audio/Music/N1.play()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

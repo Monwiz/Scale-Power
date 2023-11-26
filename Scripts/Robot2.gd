@@ -27,12 +27,15 @@ func shoot():
 	bullet.init(self, looking_right, 500*scale.x)
 	bullet.global_position = Vector2($Bullet.global_position.x, $Bullet.global_position.y)
 	get_parent().add_child(bullet)
+	$Audio/Shot.play()
 
 func hurt():
 	health -= 1
 	modulate = Color(4,4,4)
+	$Audio/Hit.play()
 
 func die():
 	is_dead = true
 	set_physics_process(false)
 	collision_layer = 0
+	$Audio/Destruction.play()

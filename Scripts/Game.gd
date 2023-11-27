@@ -1,13 +1,14 @@
 extends Node
 
 const version = "1"
-const LAST_LEVEL_ID = 2
+const LAST_LEVEL_ID = 3
 
 var unlocked_levels: int
 var total_time: float = 0
 var best_time: float = -1
 var timer_seconds: float = 0
 var level_id = 0
+var hiding_animation: float = -3
 
 var is_timer_on: bool = false
 var is_hiding_screen: bool = false
@@ -45,8 +46,8 @@ func save_data():
 func _process(delta):
 	if is_timer_on: timer_seconds += delta
 	if is_hiding_screen:
-		$GUI/Rect.position.x = min($GUI/Rect.position.x + $GUI/Rect.size.x * delta, -800)
-		if $GUI/Rect.position.x == -800:
+		hiding_animation = min(hiding_animation + delta*3, -1)
+		if hiding_animation == -1:
 			is_hiding_screen = false
 			$GUI/DeathScreen.visible = false
 			$GUI/PauseMenu.visible = false
@@ -54,6 +55,8 @@ func _process(delta):
 				$GUI/MainMenu.visible = false
 				$GUI/Settings.visible = false
 				$GUI/SelectLevel.visible = false
+				$/root/Game/GUI/Bullets/Title.text = "0"
+				$GUI/Bullets.visible = true
 				unload_level()
 				var level = load("res://Scenes/level_"+str(level_id)+".tscn")
 				call_deferred("add_child", level.instantiate())
@@ -64,6 +67,7 @@ func _process(delta):
 			else:
 				unload_level()
 				$GUI/MainMenu.visible = true
+				$GUI/Bullets.visible = false
 				if is_replaying: $GUI/SelectLevel.visible = true
 				is_replaying = false
 				$Audio/Music.set_music_id(0)
@@ -71,10 +75,12 @@ func _process(delta):
 			is_showing_screen = true
 			$GUI/Rect/ShowingSFXCenter/Showing.play()
 	elif is_showing_screen:
-		$GUI/Rect.position.x = min($GUI/Rect.position.x + $GUI/Rect.size.x * delta, 800)
-		if $GUI/Rect.position.x == 800:
-			$GUI/Rect.position.x = -2400
+		hiding_animation = min(hiding_animation + delta*3, 1)
+		if hiding_animation == 1:
+			hiding_animation = -3
 			is_showing_screen = false
+	$GUI/Rect.size = Vector2(get_viewport().size.x*3, get_viewport().size.y)
+	$GUI/Rect.position.x = $GUI/Rect.size.x * hiding_animation/3
 				
 func unload_level():
 	if get_node_or_null("Level"):

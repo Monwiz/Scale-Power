@@ -1,15 +1,17 @@
-[gd_scene load_steps=19 format=3 uid="uid://ckj0sns32t0mp"]
+[gd_scene load_steps=22 format=3 uid="uid://ckj0sns32t0mp"]
 
 [ext_resource type="Script" path="res://Scripts/GUI/MainMenu.gd" id="1_780b3"]
 [ext_resource type="Texture2D" uid="uid://mjtlv0qvx7ss" path="res://Textures/MenuBackground.png" id="2_3l3c6"]
 [ext_resource type="FontFile" uid="uid://xa44nrmrg68m" path="res://Fonts/712_serif.ttf" id="3_6fdnu"]
 [ext_resource type="Texture2D" uid="uid://cwcqdrvkw03nd" path="res://Textures/Logo.png" id="4_p3b72"]
 [ext_resource type="Script" path="res://Scripts/GUI/SelectLevel.gd" id="5_i0oa8"]
+[ext_resource type="Texture2D" uid="uid://dcwp606alhj73" path="res://Textures/BulletsCounter.png" id="6_akw18"]
 [ext_resource type="Script" path="res://Scripts/GUI/DeathScreen.gd" id="6_q3r65"]
 [ext_resource type="Script" path="res://Scripts/GUI/PauseMenu.gd" id="7_8kxkb"]
 [ext_resource type="AudioStream" uid="uid://bjf2xhxmk7fvo" path="res://Audio/HidingScreen.wav" id="7_phc7s"]
 [ext_resource type="Script" path="res://Scripts/GUI/Settings.gd" id="8_cllx1"]
 [ext_resource type="AudioStream" uid="uid://dgsgmbhrbo5c" path="res://Audio/ShowingScreen.wav" id="8_oou5u"]
+[ext_resource type="Script" path="res://Scenes/EndScreen.gd" id="10_3mn7b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7o5l"]
 bg_color = Color(0, 1, 0, 1)
@@ -36,6 +38,10 @@ font_size = 32
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7nspo"]
 bg_color = Color(0.196078, 0.196078, 0.196078, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5cice"]
+font = ExtResource("3_6fdnu")
+font_size = 64
 
 [sub_resource type="Gradient" id="Gradient_448ah"]
 offsets = PackedFloat32Array(0, 0.327014, 0.63981, 1)
@@ -251,6 +257,35 @@ grow_vertical = 0
 size_flags_vertical = 10
 focus_mode = 0
 text = "Cancel"
+
+[node name="Bullets" type="Control" parent="."]
+visible = false
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 80.0
+grow_horizontal = 2
+
+[node name="TextureRect" type="TextureRect" parent="Bullets"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 96.0
+offset_bottom = 96.0
+texture = ExtResource("6_akw18")
+
+[node name="Title" type="Label" parent="Bullets"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 0
+offset_left = 96.0
+offset_top = 34.0
+offset_right = 128.0
+offset_bottom = 85.0
+text = "0"
+label_settings = SubResource("LabelSettings_5cice")
+vertical_alignment = 1
 
 [node name="DeathScreen" type="ColorRect" parent="."]
 visible = false
@@ -487,9 +522,59 @@ text = "Close"
 [node name="EndScreen" type="Control" parent="."]
 visible = false
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("10_3mn7b")
+
+[node name="Panel" type="Panel" parent="EndScreen"]
+custom_minimum_size = Vector2(450, 225)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -100.0
+offset_right = 225.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_en8d1")
+theme_override_styles/panel = SubResource("StyleBoxFlat_7nspo")
+
+[node name="Text" type="Label" parent="EndScreen/Panel"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+offset_left = 20.0
+offset_right = 230.0
+offset_bottom = 48.0
+text = "Congratulations on
+beating the game! Sorry
+that this game was short,
+I spent most of the time
+by fixing bugs from the
+size mechanic."
+label_settings = SubResource("LabelSettings_jb73q")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Close" type="Button" parent="EndScreen/Panel"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 10
+focus_mode = 0
+text = "Cancel"
 
 [node name="Rect" type="TextureRect" parent="."]
 anchors_preset = 15
@@ -551,3 +636,4 @@ bus = &"SFX"
 [connection signal="value_changed" from="Settings/Panel/VBoxContainer/MusicVolume" to="Settings" method="_on_music_volume_value_changed"]
 [connection signal="value_changed" from="Settings/Panel/VBoxContainer/SFXVolume" to="Settings" method="_on_sfx_volume_value_changed"]
 [connection signal="pressed" from="Settings/Panel/Close" to="Settings" method="_on_close_pressed"]
+[connection signal="pressed" from="EndScreen/Panel/Close" to="EndScreen" method="_on_close_pressed"]

@@ -13,12 +13,13 @@ func _process(delta):
 	if is_dead:
 		modulate.a -= 8*delta
 		if modulate.a <= 0:
-			queue_free()
+			if not $Audio/Destruction.playing:
+				queue_free()
+	elif health <= 0:
+		die()
 	if modulate.r > 1:
 		modulate = Color(modulate.r-16*delta,modulate.g-16*delta,modulate.b-16*delta,modulate.a)
 	else: modulate = Color(1,1,1,modulate.a)
-	if health <= 0:
-		die()
 
 func hurt():
 	health -= 1
@@ -32,7 +33,7 @@ func die():
 	$Audio/Destruction.play()
 
 func _on_area_2d_body_entered(body):
-	if body != self:
+	if body != self and not is_dead:
 		$Field.visible = true
 		timer = 1
 		if body.has_method("hurt"):

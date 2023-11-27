@@ -1,6 +1,5 @@
 extends CharacterBody2D
 
-
 const SPEED = 125.0
 const JUMP_VELOCITY = -220.0
 @export_range(0,100) var bullets: int
@@ -13,9 +12,8 @@ var is_small: bool = false
 var is_dead = false
 var can_move_vertical: bool = true
 var moving_vertical: bool = false
-@export var can_interact_with_back_layer: bool
+@export var can_interact_with_front_layer: bool
 var no_return_of_process: bool = false #For level end animation
-#var on_the_backside: bool = false
 
 func _ready():
 	$Audio/Step.play(0) #Set playback position to 0
@@ -56,6 +54,42 @@ func _process(delta):
 				set_physics_process(true)
 			stop_step_sounds()
 		return
+	if moving_vertical:
+		if is_small:
+			scale.x = max(scale.x-delta, 0.5)
+			scale.y = max(scale.y-delta, 0.5)
+			$Camera2D.zoom = Vector2(2,2) / scale
+			$Camera2D.offset.y = -64 * scale.y
+			if scale.x == 0.5:
+				$Sprite.play("back")
+				collision_mask = 3 if can_interact_with_front_layer else 2
+				collision_layer = 2
+				$Bullet/Area2D.collision_mask = 3
+				z_index = -1
+				$Bullet.z_index = -3
+				
+				$Bullet.scale = scale
+				moving_vertical = false
+				set_physics_process(true)
+		else:
+			scale.x = min(scale.x+delta, 1)
+			scale.y = min(scale.y+delta, 1)
+			$Camera2D.zoom = Vector2(2,2) / scale
+			$Camera2D.offset.y = -64 * scale.y
+			if scale.x == 1:
+				$Sprite.play("front")
+				collision_mask = 1
+				collision_layer = 1
+				$Bullet/Area2D.collision_mask = 1
+				z_index = 0
+				$Bullet.z_index = -1
+				
+				$Bullet.scale = scale
+				moving_vertical = false
+				set_physics_process(true)
+	elif Input.is_action_just_pressed("shoot") and bullets > 0 and\
+	not $Sprite.animation in ["front","back"] and timer < 0:
+		shoot()
 
 func _physics_process(delta):
 	var hdirection = Input.get_axis("ui_left", "ui_right")
@@ -84,43 +118,7 @@ func _physics_process(delta):
 		if $Sprite.animation == "moving_left": $Sprite.play("left")
 		elif $Sprite.animation == "moving_right": $Sprite.play("right")
 		stop_step_sounds()
-	if moving_vertical:
-		if is_small:
-			scale.x = max(scale.x-delta, 0.5)
-			scale.y = max(scale.y-delta, 0.5)
-			$Camera2D.zoom = Vector2(2,2) / scale
-			$Camera2D.offset.y = -64 * scale.y
-			if scale.x == 0.5:
-				$Sprite.play("back")
-				collision_mask = 3 if can_interact_with_back_layer else 2
-				collision_layer = 2
-				$Bullet/Area2D.collision_mask = 3
-				z_index = -1
-				$Bullet.z_index = -3
-				
-				$Bullet.scale = scale
-				moving_vertical = false
-				set_physics_process(true)
-		else:
-			scale.x = min(scale.x+delta, 1)
-			scale.y = min(scale.y+delta, 1)
-			$Camera2D.zoom = Vector2(2,2) / scale
-			$Camera2D.offset.y = -64 * scale.y
-			if scale.x == 1:
-				$Sprite.play("front")
-				collision_mask = 1
-				collision_layer = 1
-				$Bullet/Area2D.collision_mask = 1
-				z_index = 0
-				$Bullet.z_index = -1
-				
-				$Bullet.scale = scale
-				moving_vertical = false
-				set_physics_process(true)
-	elif Input.is_action_just_pressed("shoot") and bullets > 0 and\
-	not $Sprite.animation in ["front","back"] and timer < 0:
-		shoot()
-		
+	
 	if is_on_floor():
 		if Input.is_action_just_pressed("jump") and not moving_vertical:
 			velocity.y += JUMP_VELOCITY * scale.y
@@ -158,6 +156,7 @@ func shoot():
 	bullet.global_position = Vector2($Bullet.global_position.x + scale.x * (9 if looking_right else -9), $Bullet.global_position.y)
 	get_parent().add_child(bullet)
 	$Audio/Shot.play()
+	$/root/Game/GUI/Bullets/Title.text = str(bullets)
 	
 func hurt(): die()
 
@@ -168,6 +167,7 @@ func die():
 	collision_layer = 0
 	$GPUParticles2D.emitting = true
 	bullets = 0
+	$/root/Game/GUI/Bullets/Title.text = "0"
 	$/root/Game/GUI/DeathScreen.modulate.a = 0
 	$/root/Game/GUI/DeathScreen.visible = true
 	$Audio/Death.play()
@@ -175,6 +175,7 @@ func die():
 func add_bullets(value: int):
 	bullets += value
 	$Audio/PickingUp.play()
+	$/root/Game/GUI/Bullets/Title.text = str(bullets)
 	
 func move(time: float, dont_return_process_after_movement: bool = false):
 	set_physics_process(false)

@@ -8,17 +8,20 @@ var timer = 0
 
 func _process(delta):
 	timer -= delta
-	if $RayCast2D.is_colliding() and $RayCast2D.get_collider().get_name() == "Player" and timer < 0:
+	if $RayCast2D.is_colliding() and $RayCast2D.get_collider().get_name() == "Player" and timer < 0 and not is_dead:
 		shoot()
 	if is_dead:
 		modulate.a -= 8*delta
 		if modulate.a <= 0:
-			queue_free()
+			if not $Audio/Destruction.playing:
+				queue_free()
+	elif health <= 0:
+		die()
+		
 	if modulate.r > 1:
 		modulate = Color(modulate.r-16*delta,modulate.g-16*delta,modulate.b-16*delta,modulate.a)
 	else: modulate = Color(1,1,1,modulate.a)
-	if health <= 0:
-		die()
+	
 
 func shoot():
 	timer = 0.5

@@ -140,7 +140,7 @@ func _process(_delta):
 	if holding not in [0,-1]:
 		if active_rect.size - Vector2(1,1) != round(size):
 			size = active_rect.size - Vector2(1,1)
-			mass = max(size.x*size.y/256, 1)
+			mass = max(size.x*size.y/256, 0.5)
 			$Sprite2D.scale = size/16
 			$Collision.scale = size/16
 			$Collision.global_position = active_rect.global_position + active_rect.size/2

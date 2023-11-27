@@ -1,6 +1,6 @@
 extends Control
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel") and $/root/Game/Level and $/root/Game.get_level_id() != 0:
 		visible = !visible
 		

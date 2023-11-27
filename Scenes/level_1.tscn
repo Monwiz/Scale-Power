@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://b5i6ibr7rgt6x" path="res://Textures/Blocks.png" id="1_1tama"]
 [ext_resource type="FontFile" uid="uid://xa44nrmrg68m" path="res://Fonts/712_serif.ttf" id="2_xsn4w"]
-[ext_resource type="Script" path="res://Scripts/TheEnd.gd" id="3_bbay7"]
+[ext_resource type="Script" path="res://Scripts/Level/TheEnd.gd" id="3_bykvj"]
 [ext_resource type="Texture2D" uid="uid://byi2ve0188jlt" path="res://Textures/Door/0001.png" id="4_pb1c1"]
 [ext_resource type="Texture2D" uid="uid://dul6fcovq3jue" path="res://Textures/Door/0002.png" id="5_kqkk5"]
 [ext_resource type="Texture2D" uid="uid://bxe4es1t8pv6x" path="res://Textures/Door/0003.png" id="6_4a4yu"]
@@ -17,8 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://sgocioyk7sim" path="res://Textures/Door/0012.png" id="15_snrav"]
 [ext_resource type="Texture2D" uid="uid://bcvss8nchq1xt" path="res://Textures/Door/0013.png" id="16_ojd4g"]
 [ext_resource type="Texture2D" uid="uid://yaeseqxfsasw" path="res://Textures/Door/0014.png" id="17_g44g4"]
-[ext_resource type="Script" path="res://Scripts/Player.gd" id="18_nkjwr"]
-[ext_resource type="Script" path="res://Scripts/Bullet.gd" id="19_mdfl3"]
+[ext_resource type="Script" path="res://Scripts/Level/Player.gd" id="18_eg5f5"]
+[ext_resource type="Script" path="res://Scripts/Level/Bullet.gd" id="19_81fwb"]
 [ext_resource type="Texture2D" uid="uid://dtb81cgo3178n" path="res://Textures/Player/Back.png" id="20_iglg4"]
 [ext_resource type="Texture2D" uid="uid://bygpbdw8ituh5" path="res://Textures/Player/Front.png" id="21_8xdfe"]
 [ext_resource type="Texture2D" uid="uid://doh67f3vl4p3r" path="res://Textures/Player/Left.png" id="22_64oh8"]
@@ -56,8 +56,6 @@
 [ext_resource type="Texture2D" uid="uid://dv0xkd8hqywx1" path="res://Textures/Player/Moving_right/0008.png" id="54_v863r"]
 [ext_resource type="Texture2D" uid="uid://bf7kbem7bagta" path="res://Textures/Player/Right.png" id="55_tj35q"]
 [ext_resource type="AudioStream" uid="uid://b8nrea0ae7eab" path="res://Audio/Death.wav" id="56_vqcqb"]
-[ext_resource type="Script" path="res://Scripts/SimpleObject.gd" id="56_wejqt"]
-[ext_resource type="Script" path="res://Scripts/Robot0.gd" id="57_1ycja"]
 [ext_resource type="AudioStream" uid="uid://deibgvrs87dy2" path="res://Audio/Step.wav" id="57_w8rgg"]
 [ext_resource type="AudioStream" uid="uid://cgl8irs7c6sqd" path="res://Audio/Shot.wav" id="58_6b5u4"]
 [ext_resource type="Texture2D" uid="uid://bt44k3snfdjtx" path="res://Textures/Robot0/0001.png" id="58_8wbob"]
@@ -65,9 +63,11 @@
 [ext_resource type="AudioStream" uid="uid://ckrx1uy7i8v8t" path="res://Audio/PickingUp.wav" id="59_6uaw8"]
 [ext_resource type="Texture2D" uid="uid://ityas53i4lxo" path="res://Textures/Robot0/Field.png" id="60_o7k5c"]
 [ext_resource type="AudioStream" uid="uid://bn5j1dei34et1" path="res://Audio/Jump.wav" id="60_xj0c2"]
-[ext_resource type="Script" path="res://Scripts/BulletSet.gd" id="61_ucidr"]
+[ext_resource type="Script" path="res://Scripts/Level/SimpleObject.gd" id="61_vc5hv"]
+[ext_resource type="Script" path="res://Scripts/Level/Robot0.gd" id="62_es4or"]
 [ext_resource type="AudioStream" uid="uid://g8mchr5xhn1m" path="res://Audio/Hit.wav" id="64_h16q8"]
 [ext_resource type="AudioStream" uid="uid://dqh87xeep7vlw" path="res://Audio/Destruction.wav" id="65_thhg3"]
+[ext_resource type="Script" path="res://Scripts/Level/BulletSet.gd" id="68_u0qcm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aeerl"]
 texture = ExtResource("1_1tama")
@@ -774,8 +774,7 @@ offset_left = 1.0
 offset_top = -3.0
 offset_right = 33.0
 offset_bottom = 12.0
-text = "M
-"
+text = "B"
 label_settings = SubResource("LabelSettings_7o0b5")
 vertical_alignment = 1
 
@@ -819,7 +818,8 @@ vertical_alignment = 1
 [node name="TheEnd" type="StaticBody2D" parent="FrontLayer"]
 position = Vector2(3016, 16)
 disable_mode = 2
-script = ExtResource("3_bbay7")
+script = ExtResource("3_bykvj")
+level_id = 1
 needed_number_of_destroyed_enemies = 2
 
 [node name="Door" type="AnimatedSprite2D" parent="FrontLayer/TheEnd"]
@@ -851,7 +851,7 @@ occluder = SubResource("OccluderPolygon2D_1krts")
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(-192, 80)
-script = ExtResource("18_nkjwr")
+script = ExtResource("18_eg5f5")
 
 [node name="Bullet" type="Polygon2D" parent="Player"]
 process_mode = 4
@@ -860,7 +860,7 @@ z_index = -1
 position = Vector2(0, 1)
 color = Color(0, 1, 0, 1)
 polygon = PackedVector2Array(3, -0.5, -3, -0.5, -3, 0.5, 3, 0.5)
-script = ExtResource("19_mdfl3")
+script = ExtResource("19_81fwb")
 
 [node name="Area2D" type="Area2D" parent="Player/Bullet"]
 
@@ -876,6 +876,7 @@ position = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_4xe4v")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+process_mode = 3
 offset = Vector2(0, -64)
 zoom = Vector2(2, 2)
 limit_left = -864
@@ -897,6 +898,7 @@ explosiveness = 1.0
 
 [node name="Death" type="AudioStreamPlayer" parent="Player/Audio"]
 stream = ExtResource("56_vqcqb")
+volume_db = -5.0
 
 [node name="Step" type="AudioStreamPlayer" parent="Player/Audio"]
 stream = ExtResource("57_w8rgg")
@@ -934,7 +936,7 @@ shape = SubResource("WorldBoundaryShape2D_4sr15")
 position = Vector2(1456, 52)
 mass = 2.0
 lock_rotation = true
-script = ExtResource("56_wejqt")
+script = ExtResource("61_vc5hv")
 
 [node name="Sprite2D" type="Sprite2D" parent="Objects/Box"]
 scale = Vector2(1.5, 1.5)
@@ -960,7 +962,7 @@ polygon = PackedVector2Array(-6, 5, 0, -7, 6, 5, 6, 7, -6, 7)
 position = Vector2(872, 84)
 mass = 10.0
 lock_rotation = true
-script = ExtResource("57_1ycja")
+script = ExtResource("62_es4or")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="Objects/Enemy"]
 scale = Vector2(1.5, 1.5)
@@ -995,17 +997,19 @@ debug_color = Color(0.992157, 0, 0.258824, 0.419608)
 [node name="Hit" type="AudioStreamPlayer2D" parent="Objects/Enemy/Audio"]
 stream = ExtResource("64_h16q8")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Destruction" type="AudioStreamPlayer2D" parent="Objects/Enemy/Audio"]
 stream = ExtResource("65_thhg3")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="BulletSet" type="Area2D" parent="Objects"]
 z_index = -1
 position = Vector2(496, 56)
 collision_layer = 2
 collision_mask = 2
-script = ExtResource("61_ucidr")
+script = ExtResource("68_u0qcm")
 bullets = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Objects/BulletSet"]
@@ -1020,7 +1024,7 @@ shape = SubResource("RectangleShape2D_7spum")
 position = Vector2(1712, 84)
 mass = 10.0
 lock_rotation = true
-script = ExtResource("57_1ycja")
+script = ExtResource("62_es4or")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="Objects/Enemy2"]
 scale = Vector2(1.5, 1.5)
@@ -1055,14 +1059,16 @@ debug_color = Color(0.992157, 0, 0.258824, 0.419608)
 [node name="Destruction" type="AudioStreamPlayer2D" parent="Objects/Enemy2/Audio"]
 stream = ExtResource("65_thhg3")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Hit" type="AudioStreamPlayer2D" parent="Objects/Enemy2/Audio"]
 stream = ExtResource("64_h16q8")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="BulletSet2" type="Area2D" parent="Objects"]
 position = Vector2(2112, 80)
-script = ExtResource("61_ucidr")
+script = ExtResource("68_u0qcm")
 bullets = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Objects/BulletSet2"]

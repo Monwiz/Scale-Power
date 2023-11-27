@@ -1,0 +1,553 @@
+[gd_scene load_steps=19 format=3 uid="uid://ckj0sns32t0mp"]
+
+[ext_resource type="Script" path="res://Scripts/GUI/MainMenu.gd" id="1_780b3"]
+[ext_resource type="Texture2D" uid="uid://mjtlv0qvx7ss" path="res://Textures/MenuBackground.png" id="2_3l3c6"]
+[ext_resource type="FontFile" uid="uid://xa44nrmrg68m" path="res://Fonts/712_serif.ttf" id="3_6fdnu"]
+[ext_resource type="Texture2D" uid="uid://cwcqdrvkw03nd" path="res://Textures/Logo.png" id="4_p3b72"]
+[ext_resource type="Script" path="res://Scripts/GUI/SelectLevel.gd" id="5_i0oa8"]
+[ext_resource type="Script" path="res://Scripts/GUI/DeathScreen.gd" id="6_q3r65"]
+[ext_resource type="Script" path="res://Scripts/GUI/PauseMenu.gd" id="7_8kxkb"]
+[ext_resource type="AudioStream" uid="uid://bjf2xhxmk7fvo" path="res://Audio/HidingScreen.wav" id="7_phc7s"]
+[ext_resource type="Script" path="res://Scripts/GUI/Settings.gd" id="8_cllx1"]
+[ext_resource type="AudioStream" uid="uid://dgsgmbhrbo5c" path="res://Audio/ShowingScreen.wav" id="8_oou5u"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7o5l"]
+bg_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hil5r"]
+content_margin_top = 1.0
+content_margin_bottom = 1.0
+bg_color = Color(0, 0.270588, 0, 1)
+corner_radius_top_right = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5vrf1"]
+bg_color = Color(0.184314, 0.184314, 0.184314, 0.768627)
+
+[sub_resource type="Theme" id="Theme_en8d1"]
+default_font = ExtResource("3_6fdnu")
+default_font_size = 32
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_n7o5l")
+HSlider/styles/slider = SubResource("StyleBoxFlat_hil5r")
+Panel/styles/panel = SubResource("StyleBoxFlat_5vrf1")
+
+[sub_resource type="LabelSettings" id="LabelSettings_jb73q"]
+font = ExtResource("3_6fdnu")
+font_size = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7nspo"]
+bg_color = Color(0.196078, 0.196078, 0.196078, 1)
+
+[sub_resource type="Gradient" id="Gradient_448ah"]
+offsets = PackedFloat32Array(0, 0.327014, 0.63981, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tu4xg"]
+gradient = SubResource("Gradient_448ah")
+width = 2400
+
+[node name="GUI" type="CanvasLayer"]
+
+[node name="MainMenu" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_780b3")
+
+[node name="TextureRect" type="TextureRect" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_3l3c6")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Panel" type="Panel" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -275.0
+offset_top = 50.0
+offset_right = -25.0
+offset_bottom = -50.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_en8d1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Container2" type="Container" parent="MainMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="MainMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(196, 96)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("4_p3b72")
+
+[node name="Container" type="Container" parent="MainMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="MainMenu/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="LoadGame" type="Button" parent="MainMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_vertical = 0
+focus_mode = 0
+disabled = true
+text = "Load game"
+
+[node name="NewGame" type="Button" parent="MainMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_vertical = 0
+focus_mode = 0
+text = "New game"
+
+[node name="SelectLevel" type="Button" parent="MainMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_vertical = 0
+focus_mode = 0
+disabled = true
+toggle_mode = true
+text = "Select level"
+
+[node name="Settings" type="Button" parent="MainMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_vertical = 0
+focus_mode = 0
+toggle_mode = true
+text = "Settings"
+
+[node name="Exit" type="Button" parent="MainMenu/Panel/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_vertical = 10
+focus_mode = 0
+text = "Exit
+"
+
+[node name="Label" type="Label" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 280.0
+grow_vertical = 0
+text = "By Monwiz, v1.0"
+label_settings = SubResource("LabelSettings_jb73q")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SelectLevel" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_i0oa8")
+
+[node name="Panel" type="Panel" parent="SelectLevel"]
+custom_minimum_size = Vector2(250, 200)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -100.0
+offset_right = 125.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_en8d1")
+theme_override_styles/panel = SubResource("StyleBoxFlat_7nspo")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SelectLevel/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_right = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="SelectLevel/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+text = "Select level"
+label_settings = SubResource("LabelSettings_jb73q")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="SelectLevel/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="SelectLevel/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+columns = 7
+
+[node name="N1" type="Button" parent="SelectLevel/Panel/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_vertical = 0
+focus_mode = 0
+disabled = true
+text = "1"
+
+[node name="N2" type="Button" parent="SelectLevel/Panel/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+focus_mode = 0
+disabled = true
+text = "2"
+
+[node name="N3" type="Button" parent="SelectLevel/Panel/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_vertical = 0
+focus_mode = 0
+disabled = true
+text = "3
+"
+
+[node name="Cancel" type="Button" parent="SelectLevel/Panel"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 10
+focus_mode = 0
+text = "Cancel"
+
+[node name="DeathScreen" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 1, 0, 0.25098)
+script = ExtResource("6_q3r65")
+
+[node name="Panel" type="Panel" parent="DeathScreen"]
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -100.0
+offset_right = 125.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_en8d1")
+theme_override_styles/panel = SubResource("StyleBoxFlat_7nspo")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeathScreen/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="Title" type="Label" parent="DeathScreen/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_vertical = 3
+text = "You are dead"
+label_settings = SubResource("LabelSettings_jb73q")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="DeathScreen/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Reset" type="Button" parent="DeathScreen/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+focus_mode = 0
+text = "Reset"
+
+[node name="MainMenu" type="Button" parent="DeathScreen/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+text = "Main menu"
+
+[node name="PauseMenu" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.25098)
+script = ExtResource("7_8kxkb")
+
+[node name="Panel" type="Panel" parent="PauseMenu"]
+custom_minimum_size = Vector2(250, 330)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -100.0
+offset_right = 125.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_en8d1")
+theme_override_styles/panel = SubResource("StyleBoxFlat_7nspo")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="Title" type="Label" parent="PauseMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_vertical = 3
+text = "Pause"
+label_settings = SubResource("LabelSettings_jb73q")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="PauseMenu/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Resume" type="Button" parent="PauseMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+focus_mode = 0
+text = "Resume"
+
+[node name="Reset" type="Button" parent="PauseMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+focus_mode = 0
+text = "Reset"
+
+[node name="Settings" type="Button" parent="PauseMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+focus_mode = 0
+toggle_mode = true
+text = "Settings"
+
+[node name="MainMenu" type="Button" parent="PauseMenu/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+text = "Main menu"
+
+[node name="Exit" type="Button" parent="PauseMenu/Panel/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+focus_mode = 0
+text = "Exit"
+
+[node name="Settings" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_cllx1")
+
+[node name="Panel" type="Panel" parent="Settings"]
+custom_minimum_size = Vector2(500, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_en8d1")
+theme_override_styles/panel = SubResource("StyleBoxFlat_7nspo")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_right = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Settings/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+text = "Settings"
+label_settings = SubResource("LabelSettings_jb73q")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="MusicVolumeLabel" type="Label" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Music volume"
+label_settings = SubResource("LabelSettings_jb73q")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MusicVolume" type="HSlider" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+min_value = -25.0
+max_value = 0.0
+step = 0.25
+
+[node name="SFXVolumeLabel" type="Label" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "SFX volume"
+label_settings = SubResource("LabelSettings_jb73q")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SFXVolume" type="HSlider" parent="Settings/Panel/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+min_value = -20.0
+max_value = 5.0
+step = 0.25
+
+[node name="Close" type="Button" parent="Settings/Panel"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 10
+focus_mode = 0
+text = "Close"
+
+[node name="EndScreen" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Rect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2400.0
+offset_right = -800.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_tu4xg")
+
+[node name="HidingSFXCenter" type="Control" parent="Rect"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -800.0
+offset_top = 300.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Hiding" type="AudioStreamPlayer2D" parent="Rect/HidingSFXCenter"]
+stream = ExtResource("7_phc7s")
+bus = &"SFX"
+
+[node name="ShowingSFXCenter" type="Control" parent="Rect"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -1200.0
+offset_top = 300.0
+offset_right = -800.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Showing" type="AudioStreamPlayer2D" parent="Rect/ShowingSFXCenter"]
+stream = ExtResource("8_oou5u")
+bus = &"SFX"
+
+[connection signal="pressed" from="MainMenu/Panel/VBoxContainer/LoadGame" to="MainMenu" method="_on_load_game_pressed"]
+[connection signal="pressed" from="MainMenu/Panel/VBoxContainer/NewGame" to="MainMenu" method="_on_new_game_pressed"]
+[connection signal="pressed" from="MainMenu/Panel/VBoxContainer/SelectLevel" to="MainMenu" method="_on_select_level_pressed"]
+[connection signal="pressed" from="MainMenu/Panel/VBoxContainer/Settings" to="MainMenu" method="_on_settings_pressed"]
+[connection signal="pressed" from="MainMenu/Panel/VBoxContainer/Exit" to="MainMenu" method="_on_exit_pressed"]
+[connection signal="pressed" from="SelectLevel/Panel/VBoxContainer/GridContainer/N1" to="SelectLevel" method="_on_n_1_pressed"]
+[connection signal="pressed" from="SelectLevel/Panel/VBoxContainer/GridContainer/N2" to="SelectLevel" method="_on_n_2_pressed"]
+[connection signal="pressed" from="SelectLevel/Panel/VBoxContainer/GridContainer/N3" to="SelectLevel" method="_on_n_3_pressed"]
+[connection signal="pressed" from="SelectLevel/Panel/Cancel" to="SelectLevel" method="_on_cancel_pressed"]
+[connection signal="pressed" from="DeathScreen/Panel/VBoxContainer/Reset" to="DeathScreen" method="_on_reset_pressed"]
+[connection signal="pressed" from="DeathScreen/Panel/VBoxContainer/MainMenu" to="DeathScreen" method="_on_main_menu_pressed"]
+[connection signal="pressed" from="PauseMenu/Panel/VBoxContainer/Resume" to="PauseMenu" method="_on_resume_pressed"]
+[connection signal="pressed" from="PauseMenu/Panel/VBoxContainer/Reset" to="PauseMenu" method="_on_reset_pressed"]
+[connection signal="pressed" from="PauseMenu/Panel/VBoxContainer/Settings" to="PauseMenu" method="_on_settings_pressed"]
+[connection signal="pressed" from="PauseMenu/Panel/VBoxContainer/MainMenu" to="PauseMenu" method="_on_main_menu_pressed"]
+[connection signal="pressed" from="PauseMenu/Panel/VBoxContainer/Exit" to="PauseMenu" method="_on_exit_pressed"]
+[connection signal="value_changed" from="Settings/Panel/VBoxContainer/MusicVolume" to="Settings" method="_on_music_volume_value_changed"]
+[connection signal="value_changed" from="Settings/Panel/VBoxContainer/SFXVolume" to="Settings" method="_on_sfx_volume_value_changed"]
+[connection signal="pressed" from="Settings/Panel/Close" to="Settings" method="_on_close_pressed"]

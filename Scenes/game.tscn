@@ -2,16 +2,18 @@
 
 [ext_resource type="PackedScene" uid="uid://dlrqugbmtcyqb" path="res://Scenes/parallax_background.tscn" id="1_5svmq"]
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_jw81k"]
-[ext_resource type="AudioStream" uid="uid://d2oe8kiljfr84" path="res://Audio/Music/menu.wav" id="3_pr5ad"]
+[ext_resource type="PackedScene" uid="uid://ckj0sns32t0mp" path="res://Scenes/gui.tscn" id="2_d74o5"]
 [ext_resource type="AudioStream" uid="uid://csbvrf3b274bg" path="res://Audio/Click.wav" id="3_ubxs5"]
-[ext_resource type="AudioStream" uid="uid://bpwbvw4h050ot" path="res://Audio/Music/music.wav" id="4_k7q7n"]
+[ext_resource type="Script" path="res://Scripts/Music.gd" id="4_5bldk"]
 [ext_resource type="AudioStream" uid="uid://bjf2xhxmk7fvo" path="res://Audio/HidingScreen.wav" id="4_xr6pt"]
 [ext_resource type="AudioStream" uid="uid://dgsgmbhrbo5c" path="res://Audio/ShowingScreen.wav" id="5_ff3n8"]
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node"]
 script = ExtResource("1_jw81k")
 metadata/_edit_horizontal_guides_ = [32.0, 73.0]
 metadata/_edit_vertical_guides_ = [138.0, 113.0]
+
+[node name="GUI" parent="." instance=ExtResource("2_d74o5")]
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("1_5svmq")]
 offset = Vector2(1024, 16)
@@ -21,20 +23,19 @@ scroll_ignore_camera_zoom = true
 
 [node name="Audio" type="Node" parent="."]
 
-[node name="Music" type="Node" parent="Audio"]
-
-[node name="Menu" type="AudioStreamPlayer" parent="Audio/Music"]
-stream = ExtResource("3_pr5ad")
-autoplay = true
-
-[node name="N1" type="AudioStreamPlayer" parent="Audio/Music"]
-stream = ExtResource("4_k7q7n")
+[node name="Music" type="AudioStreamPlayer" parent="Audio"]
+script = ExtResource("4_5bldk")
 
 [node name="Click" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("3_ubxs5")
+bus = &"SFX"
 
 [node name="HidingScreen" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("4_xr6pt")
+volume_db = -10.0
+bus = &"SFX"
 
 [node name="ShowingScreen" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("5_ff3n8")
+volume_db = -10.0
+bus = &"SFX"

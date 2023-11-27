@@ -16,15 +16,15 @@
 [ext_resource type="Texture2D" uid="uid://bcvss8nchq1xt" path="res://Textures/Door/0013.png" id="14_qejkn"]
 [ext_resource type="Texture2D" uid="uid://yaeseqxfsasw" path="res://Textures/Door/0014.png" id="15_7y42l"]
 [ext_resource type="FontFile" uid="uid://xa44nrmrg68m" path="res://Fonts/712_serif.ttf" id="16_eiqdu"]
-[ext_resource type="Script" path="res://Scripts/MessageBoxWhenBoxIsDestroyed.gd" id="16_en104"]
-[ext_resource type="Script" path="res://Scripts/StartDoor.gd" id="16_su42l"]
-[ext_resource type="Script" path="res://Scripts/Player.gd" id="16_xchrr"]
-[ext_resource type="Script" path="res://Scripts/Bullet.gd" id="17_h8cww"]
-[ext_resource type="Script" path="res://Scripts/TheEnd.gd" id="18_otxmr"]
+[ext_resource type="Script" path="res://Scripts/Level/StartDoor.gd" id="16_pqx5q"]
+[ext_resource type="Script" path="res://Scripts/Level/MessageBoxWhenBoxIsDestroyed.gd" id="17_v5j5r"]
 [ext_resource type="Texture2D" uid="uid://dtb81cgo3178n" path="res://Textures/Player/Back.png" id="18_seub8"]
 [ext_resource type="Texture2D" uid="uid://bygpbdw8ituh5" path="res://Textures/Player/Front.png" id="19_3yey1"]
+[ext_resource type="Script" path="res://Scripts/Level/TheEnd.gd" id="19_gyg8j"]
+[ext_resource type="Script" path="res://Scripts/Level/Player.gd" id="20_ebhy6"]
 [ext_resource type="Texture2D" uid="uid://doh67f3vl4p3r" path="res://Textures/Player/Left.png" id="20_wcbr8"]
 [ext_resource type="Texture2D" uid="uid://cxyjgndchvf2t" path="res://Textures/Player/Moving_back/0001.png" id="21_cdd8d"]
+[ext_resource type="Script" path="res://Scripts/Level/Bullet.gd" id="21_pcjhq"]
 [ext_resource type="Texture2D" uid="uid://hor3bcx7hki6" path="res://Textures/Player/Moving_back/0002.png" id="22_uisbv"]
 [ext_resource type="Texture2D" uid="uid://den5455dh0eqq" path="res://Textures/Player/Moving_back/0003.png" id="23_oj5qj"]
 [ext_resource type="Texture2D" uid="uid://b56jxvwx14mgw" path="res://Textures/Player/Moving_back/0004.png" id="24_cvgp0"]
@@ -57,8 +57,6 @@
 [ext_resource type="Texture2D" uid="uid://bv1trvfuf8vmd" path="res://Textures/Player/Moving_right/0007.png" id="51_pg5p6"]
 [ext_resource type="Texture2D" uid="uid://dv0xkd8hqywx1" path="res://Textures/Player/Moving_right/0008.png" id="52_rfcjl"]
 [ext_resource type="Texture2D" uid="uid://bf7kbem7bagta" path="res://Textures/Player/Right.png" id="53_l7qbu"]
-[ext_resource type="Script" path="res://Scripts/Object.gd" id="54_3eeb7"]
-[ext_resource type="Script" path="res://Scripts/Robot1.gd" id="55_nynq4"]
 [ext_resource type="Texture2D" uid="uid://cosdara17rdyh" path="res://Textures/Robot1/0001.png" id="56_jw86y"]
 [ext_resource type="Texture2D" uid="uid://bh1nxq46x4a14" path="res://Textures/Robot1/0002.png" id="57_bhqd7"]
 [ext_resource type="AudioStream" uid="uid://b8nrea0ae7eab" path="res://Audio/Death.wav" id="58_ma8bq"]
@@ -71,21 +69,23 @@
 [ext_resource type="AudioStream" uid="uid://ckrx1uy7i8v8t" path="res://Audio/PickingUp.wav" id="61_3cjb8"]
 [ext_resource type="AudioStream" uid="uid://bn5j1dei34et1" path="res://Audio/Jump.wav" id="62_4iayi"]
 [ext_resource type="Texture2D" uid="uid://ordqec4uskwe" path="res://Textures/Robot1/0007.png" id="62_8vo1l"]
+[ext_resource type="Script" path="res://Scripts/Level/Object.gd" id="63_8ncjg"]
 [ext_resource type="Texture2D" uid="uid://c7rx7em6fl6lu" path="res://Textures/Robot1/0008.png" id="63_p1ng4"]
-[ext_resource type="Script" path="res://Scripts/SizableZoneCursor.gd" id="64_mq8x1"]
+[ext_resource type="Script" path="res://Scripts/Level/Robot1.gd" id="64_uc8e5"]
 [ext_resource type="Texture2D" uid="uid://djr10sak6i07l" path="res://Textures/Borders.png" id="65_u3axx"]
-[ext_resource type="Script" path="res://Scripts/BulletSet.gd" id="66_cxu0f"]
-[ext_resource type="Script" path="res://Scripts/NinePatchRect.gd" id="66_lu2v2"]
 [ext_resource type="Texture2D" uid="uid://dnpt0tbtgt70n" path="res://Textures/Robot2/0001.png" id="68_2a8jg"]
 [ext_resource type="Texture2D" uid="uid://7crhqc4tpf8a" path="res://Textures/Robot2/0002.png" id="69_ixtfy"]
-[ext_resource type="Script" path="res://Scripts/Robot2.gd" id="69_qh7qv"]
-[ext_resource type="Script" path="res://Scripts/Robot0.gd" id="70_tjqkf"]
 [ext_resource type="AudioStream" uid="uid://g8mchr5xhn1m" path="res://Audio/Hit.wav" id="70_w45fs"]
 [ext_resource type="AudioStream" uid="uid://dqh87xeep7vlw" path="res://Audio/Destruction.wav" id="71_hrrrw"]
 [ext_resource type="Texture2D" uid="uid://bt44k3snfdjtx" path="res://Textures/Robot0/0001.png" id="71_ptpcy"]
 [ext_resource type="Texture2D" uid="uid://duahq8eg362md" path="res://Textures/Robot0/0002.png" id="72_aoq4y"]
 [ext_resource type="Texture2D" uid="uid://ityas53i4lxo" path="res://Textures/Robot0/Field.png" id="73_hcg48"]
 [ext_resource type="AudioStream" uid="uid://dvmater2n3q2a" path="res://Audio/Riding.wav" id="75_t3837"]
+[ext_resource type="Script" path="res://Scripts/Level/BulletSet.gd" id="76_tlkts"]
+[ext_resource type="Script" path="res://Scripts/Level/Robot2.gd" id="77_nvh64"]
+[ext_resource type="Script" path="res://Scripts/Level/Robot0.gd" id="80_ukp1x"]
+[ext_resource type="Script" path="res://Scripts/Level/SizableZoneCursor.gd" id="84_y1lwh"]
+[ext_resource type="Script" path="res://Scripts/Level/NinePatchRect.gd" id="86_lel2b"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_6lcvb"]
 tile_data = PackedInt32Array(0, 393216, 1, 65536, 393216, 2, 131072, 393216, 3, 1, 458752, 1)
@@ -533,6 +533,14 @@ region = Rect2(96, 64, 16, 16)
 
 [node name="BackLayer" type="TileMap" parent="."]
 format = 2
+layer_0/enabled = false
+layer_1/name = ""
+layer_1/enabled = false
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = false
+layer_1/y_sort_origin = 0
+layer_1/z_index = 0
+layer_1/tile_data = PackedInt32Array()
 
 [node name="FrontLayer" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_5rldf")
@@ -598,7 +606,7 @@ z_index = 1
 position = Vector2(-152, 80)
 scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_2tgtg")
-script = ExtResource("16_su42l")
+script = ExtResource("16_pqx5q")
 
 [node name="MessageBox" type="ColorRect" parent="FrontLayer"]
 offset_left = 464.0
@@ -606,7 +614,7 @@ offset_top = -56.0
 offset_right = 770.0
 offset_bottom = 4.0
 color = Color(0, 0, 0, 1)
-script = ExtResource("16_en104")
+script = ExtResource("17_v5j5r")
 
 [node name="Label" type="Label" parent="FrontLayer/MessageBox"]
 layout_mode = 0
@@ -702,7 +710,8 @@ vertical_alignment = 1
 [node name="TheEnd" type="StaticBody2D" parent="FrontLayer"]
 position = Vector2(3824, 48)
 disable_mode = 2
-script = ExtResource("18_otxmr")
+script = ExtResource("19_gyg8j")
+level_id = 2
 needed_number_of_destroyed_enemies = 7
 player_movement_time = 1.0
 
@@ -734,7 +743,7 @@ occluder = SubResource("OccluderPolygon2D_km1rw")
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(-200, 80)
-script = ExtResource("16_xchrr")
+script = ExtResource("20_ebhy6")
 movement_time = 1.0
 
 [node name="Bullet" type="Polygon2D" parent="Player"]
@@ -744,7 +753,7 @@ z_index = -1
 position = Vector2(0, 1)
 color = Color(0, 1, 0, 1)
 polygon = PackedVector2Array(3, -0.5, -3, -0.5, -3, 0.5, 3, 0.5)
-script = ExtResource("17_h8cww")
+script = ExtResource("21_pcjhq")
 
 [node name="Area2D" type="Area2D" parent="Player/Bullet"]
 
@@ -760,6 +769,7 @@ position = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_shm68")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+process_mode = 3
 offset = Vector2(0, -64)
 zoom = Vector2(2, 2)
 limit_left = -864
@@ -780,20 +790,25 @@ explosiveness = 1.0
 
 [node name="Death" type="AudioStreamPlayer" parent="Player/Audio"]
 stream = ExtResource("58_ma8bq")
+bus = &"SFX"
 
 [node name="Step" type="AudioStreamPlayer" parent="Player/Audio"]
 stream = ExtResource("59_a87ne")
+bus = &"SFX"
 
 [node name="Shot" type="AudioStreamPlayer2D" parent="Player/Audio"]
 stream = ExtResource("59_kkfd2")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="PickingUp" type="AudioStreamPlayer" parent="Player/Audio"]
 stream = ExtResource("61_3cjb8")
+bus = &"SFX"
 
 [node name="Jump" type="AudioStreamPlayer2D" parent="Player/Audio"]
 stream = ExtResource("62_4iayi")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="AudioListener2D" type="AudioListener2D" parent="Player"]
 current = true
@@ -809,7 +824,7 @@ mass = 0.5
 center_of_mass_mode = 1
 gravity_scale = 4.0
 lock_rotation = true
-script = ExtResource("54_3eeb7")
+script = ExtResource("63_8ncjg")
 size = Vector2(16, 16)
 
 [node name="Sprite2D" type="Sprite2D" parent="Objects/Box"]
@@ -832,7 +847,7 @@ polygon = PackedVector2Array(-6, 7, 0, -7, 6, 7)
 
 [node name="Enemy" type="CharacterBody2D" parent="Objects" groups=["Enemies"]]
 position = Vector2(1800, 88)
-script = ExtResource("55_nynq4")
+script = ExtResource("64_uc8e5")
 
 [node name="SpriteCenter" type="Node2D" parent="Objects/Enemy"]
 
@@ -862,15 +877,18 @@ shape = SubResource("RectangleShape2D_7vce7")
 [node name="Hit" type="AudioStreamPlayer2D" parent="Objects/Enemy/Audio"]
 stream = ExtResource("70_w45fs")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Destruction" type="AudioStreamPlayer2D" parent="Objects/Enemy/Audio"]
 stream = ExtResource("71_hrrrw")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Riding" type="AudioStreamPlayer2D" parent="Objects/Enemy/Audio"]
 stream = ExtResource("75_t3837")
 autoplay = true
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Box2" type="RigidBody2D" parent="Objects"]
 position = Vector2(888, 88)
@@ -878,7 +896,7 @@ mass = 0.5
 center_of_mass_mode = 1
 gravity_scale = 4.0
 lock_rotation = true
-script = ExtResource("54_3eeb7")
+script = ExtResource("63_8ncjg")
 size = Vector2(16, 16)
 
 [node name="Sprite2D" type="Sprite2D" parent="Objects/Box2"]
@@ -889,7 +907,7 @@ shape = SubResource("RectangleShape2D_sogum")
 
 [node name="BulletSet" type="Area2D" parent="Objects"]
 position = Vector2(1536, 80)
-script = ExtResource("66_cxu0f")
+script = ExtResource("76_tlkts")
 bullets = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="Objects/BulletSet"]
@@ -904,7 +922,7 @@ mass = 2.0
 center_of_mass_mode = 1
 gravity_scale = 4.0
 lock_rotation = true
-script = ExtResource("54_3eeb7")
+script = ExtResource("63_8ncjg")
 size = Vector2(32, 32)
 
 [node name="Sprite2D" type="Sprite2D" parent="Objects/Box3"]
@@ -921,7 +939,7 @@ mass = 2.0
 center_of_mass_mode = 1
 gravity_scale = 4.0
 lock_rotation = true
-script = ExtResource("54_3eeb7")
+script = ExtResource("63_8ncjg")
 size = Vector2(32, 32)
 
 [node name="Sprite2D" type="Sprite2D" parent="Objects/Box4"]
@@ -934,7 +952,7 @@ shape = SubResource("RectangleShape2D_sogum")
 
 [node name="Enemy2" type="RigidBody2D" parent="Objects" groups=["Enemies"]]
 position = Vector2(2192, -12)
-script = ExtResource("69_qh7qv")
+script = ExtResource("77_nvh64")
 
 [node name="Bullet" type="Polygon2D" parent="Objects/Enemy2"]
 process_mode = 4
@@ -943,7 +961,7 @@ position = Vector2(7.5, 0)
 scale = Vector2(1.5, 1.5)
 color = Color(0, 1, 0, 1)
 polygon = PackedVector2Array(3, -0.5, -3, -0.5, -3, 0.5, 3, 0.5)
-script = ExtResource("17_h8cww")
+script = ExtResource("21_pcjhq")
 
 [node name="Area2D" type="Area2D" parent="Objects/Enemy2/Bullet"]
 
@@ -968,14 +986,17 @@ polygon = PackedVector2Array(-4, 6, -5, 6, -5, 8, 1, 8, 1, 6, 0, 6, 0, 4, 3, 4, 
 [node name="Shot" type="AudioStreamPlayer2D" parent="Objects/Enemy2/Audio"]
 stream = ExtResource("59_kkfd2")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Hit" type="AudioStreamPlayer2D" parent="Objects/Enemy2/Audio"]
 stream = ExtResource("70_w45fs")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Destruction" type="AudioStreamPlayer2D" parent="Objects/Enemy2/Audio"]
 stream = ExtResource("71_hrrrw")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Box5" type="RigidBody2D" parent="Objects"]
 position = Vector2(2328, -248)
@@ -983,7 +1004,7 @@ mass = 0.5
 center_of_mass_mode = 1
 gravity_scale = 4.0
 lock_rotation = true
-script = ExtResource("54_3eeb7")
+script = ExtResource("63_8ncjg")
 size = Vector2(16, 16)
 
 [node name="Sprite2D" type="Sprite2D" parent="Objects/Box5"]
@@ -994,7 +1015,7 @@ shape = SubResource("RectangleShape2D_sogum")
 
 [node name="Enemy3" type="CharacterBody2D" parent="Objects" groups=["Enemies"]]
 position = Vector2(2328, -136)
-script = ExtResource("55_nynq4")
+script = ExtResource("64_uc8e5")
 
 [node name="SpriteCenter" type="Node2D" parent="Objects/Enemy3"]
 
@@ -1024,21 +1045,24 @@ shape = SubResource("RectangleShape2D_7vce7")
 [node name="Hit" type="AudioStreamPlayer2D" parent="Objects/Enemy3/Audio"]
 stream = ExtResource("70_w45fs")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Destruction" type="AudioStreamPlayer2D" parent="Objects/Enemy3/Audio"]
 stream = ExtResource("71_hrrrw")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Riding" type="AudioStreamPlayer2D" parent="Objects/Enemy3/Audio"]
 stream = ExtResource("75_t3837")
 autoplay = true
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Enemy4" type="RigidBody2D" parent="Objects" groups=["Enemies"]]
 position = Vector2(2192, -76)
 mass = 10.0
 lock_rotation = true
-script = ExtResource("70_tjqkf")
+script = ExtResource("80_ukp1x")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="Objects/Enemy4"]
 scale = Vector2(1.5, 1.5)
@@ -1072,14 +1096,16 @@ debug_color = Color(0.992157, 0, 0.258824, 0.419608)
 [node name="Hit" type="AudioStreamPlayer2D" parent="Objects/Enemy4/Audio"]
 stream = ExtResource("70_w45fs")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Destruction" type="AudioStreamPlayer2D" parent="Objects/Enemy4/Audio"]
 stream = ExtResource("71_hrrrw")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="BulletSet2" type="Area2D" parent="Objects"]
 position = Vector2(2336, 48)
-script = ExtResource("66_cxu0f")
+script = ExtResource("76_tlkts")
 bullets = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Objects/BulletSet2"]
@@ -1090,7 +1116,7 @@ shape = SubResource("RectangleShape2D_rnygf")
 
 [node name="BulletSet3" type="Area2D" parent="Objects"]
 position = Vector2(2320, 48)
-script = ExtResource("66_cxu0f")
+script = ExtResource("76_tlkts")
 bullets = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Objects/BulletSet3"]
@@ -1101,7 +1127,7 @@ shape = SubResource("RectangleShape2D_rnygf")
 
 [node name="BulletSet4" type="Area2D" parent="Objects"]
 position = Vector2(2171, -80)
-script = ExtResource("66_cxu0f")
+script = ExtResource("76_tlkts")
 bullets = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="Objects/BulletSet4"]
@@ -1112,7 +1138,7 @@ shape = SubResource("RectangleShape2D_rnygf")
 
 [node name="Enemy5" type="RigidBody2D" parent="Objects" groups=["Enemies"]]
 position = Vector2(2328, -76)
-script = ExtResource("69_qh7qv")
+script = ExtResource("77_nvh64")
 
 [node name="Bullet" type="Polygon2D" parent="Objects/Enemy5"]
 process_mode = 4
@@ -1121,7 +1147,7 @@ position = Vector2(-7.5, 0)
 scale = Vector2(1.5, 1.5)
 color = Color(0, 1, 0, 1)
 polygon = PackedVector2Array(3, -0.5, -3, -0.5, -3, 0.5, 3, 0.5)
-script = ExtResource("17_h8cww")
+script = ExtResource("21_pcjhq")
 
 [node name="Area2D" type="Area2D" parent="Objects/Enemy5/Bullet"]
 
@@ -1146,18 +1172,21 @@ target_position = Vector2(-168, -0.75)
 [node name="Shot" type="AudioStreamPlayer2D" parent="Objects/Enemy5/Audio"]
 stream = ExtResource("59_kkfd2")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Hit" type="AudioStreamPlayer2D" parent="Objects/Enemy5/Audio"]
 stream = ExtResource("70_w45fs")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Destruction" type="AudioStreamPlayer2D" parent="Objects/Enemy5/Audio"]
 stream = ExtResource("71_hrrrw")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Enemy6" type="CharacterBody2D" parent="Objects" groups=["Enemies"]]
 position = Vector2(2176, -136)
-script = ExtResource("55_nynq4")
+script = ExtResource("64_uc8e5")
 
 [node name="SpriteCenter" type="Node2D" parent="Objects/Enemy6"]
 
@@ -1187,19 +1216,22 @@ shape = SubResource("RectangleShape2D_7vce7")
 [node name="Hit" type="AudioStreamPlayer2D" parent="Objects/Enemy6/Audio"]
 stream = ExtResource("70_w45fs")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Destruction" type="AudioStreamPlayer2D" parent="Objects/Enemy6/Audio"]
 stream = ExtResource("71_hrrrw")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Riding" type="AudioStreamPlayer2D" parent="Objects/Enemy6/Audio"]
 stream = ExtResource("75_t3837")
 autoplay = true
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="BulletSet5" type="Area2D" parent="Objects"]
 position = Vector2(2320, -208)
-script = ExtResource("66_cxu0f")
+script = ExtResource("76_tlkts")
 bullets = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Objects/BulletSet5"]
@@ -1210,7 +1242,7 @@ shape = SubResource("RectangleShape2D_rnygf")
 
 [node name="BulletSet6" type="Area2D" parent="Objects"]
 position = Vector2(2315, -320)
-script = ExtResource("66_cxu0f")
+script = ExtResource("76_tlkts")
 bullets = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="Objects/BulletSet6"]
@@ -1223,7 +1255,7 @@ shape = SubResource("RectangleShape2D_rnygf")
 position = Vector2(2552, -296)
 mass = 10.0
 lock_rotation = true
-script = ExtResource("70_tjqkf")
+script = ExtResource("80_ukp1x")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="Objects/Enemy7"]
 sprite_frames = SubResource("SpriteFrames_qvibk")
@@ -1253,17 +1285,19 @@ debug_color = Color(0.992157, 0, 0.258824, 0.419608)
 [node name="Hit" type="AudioStreamPlayer2D" parent="Objects/Enemy7/Audio"]
 stream = ExtResource("70_w45fs")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Destruction" type="AudioStreamPlayer2D" parent="Objects/Enemy7/Audio"]
 stream = ExtResource("71_hrrrw")
 max_distance = 500.0
+bus = &"SFX"
 
 [node name="Box6" type="RigidBody2D" parent="Objects"]
 position = Vector2(2824, -300)
 center_of_mass_mode = 1
 gravity_scale = 4.0
 lock_rotation = true
-script = ExtResource("54_3eeb7")
+script = ExtResource("63_8ncjg")
 size = Vector2(24, 24)
 
 [node name="Sprite2D" type="Sprite2D" parent="Objects/Box6"]
@@ -1297,7 +1331,7 @@ metadata/bottom_right_corner = true
 clip_children = 2
 z_index = 1
 polygon = PackedVector2Array(-1, -1, -1, 1, 1, 1, 1, -1)
-script = ExtResource("64_mq8x1")
+script = ExtResource("84_y1lwh")
 
 [node name="SizableZone2" type="ColorRect" parent="SizableZones"]
 clip_children = 2
@@ -1320,7 +1354,7 @@ metadata/bottom_right_corner = true
 clip_children = 2
 z_index = 1
 polygon = PackedVector2Array(-1, -1, -1, 1, 1, 1, 1, -1)
-script = ExtResource("64_mq8x1")
+script = ExtResource("84_y1lwh")
 
 [node name="SizableZone3" type="ColorRect" parent="SizableZones"]
 clip_children = 2
@@ -1343,7 +1377,7 @@ metadata/bottom_right_corner = true
 clip_children = 2
 z_index = 1
 polygon = PackedVector2Array(-1, -1, -1, 1, 1, 1, 1, -1)
-script = ExtResource("64_mq8x1")
+script = ExtResource("84_y1lwh")
 
 [node name="SizableZone4" type="ColorRect" parent="SizableZones"]
 clip_children = 2
@@ -1366,7 +1400,7 @@ metadata/bottom_right_corner = true
 clip_children = 2
 z_index = 1
 polygon = PackedVector2Array(-1, -1, -1, 1, 1, 1, 1, -1)
-script = ExtResource("64_mq8x1")
+script = ExtResource("84_y1lwh")
 
 [node name="SizableZone5" type="ColorRect" parent="SizableZones"]
 clip_children = 2
@@ -1389,7 +1423,7 @@ metadata/bottom_right_corner = true
 clip_children = 2
 z_index = 1
 polygon = PackedVector2Array(-1, -1, -1, 1, 1, 1, 1, -1)
-script = ExtResource("64_mq8x1")
+script = ExtResource("84_y1lwh")
 
 [node name="SizableZone6" type="ColorRect" parent="SizableZones"]
 clip_children = 2
@@ -1412,7 +1446,7 @@ metadata/bottom_right_corner = true
 clip_children = 2
 z_index = 1
 polygon = PackedVector2Array(-1, -1, -1, 1, 1, 1, 1, -1)
-script = ExtResource("64_mq8x1")
+script = ExtResource("84_y1lwh")
 
 [node name="SizableZone7" type="ColorRect" parent="SizableZones"]
 clip_children = 2
@@ -1435,7 +1469,7 @@ metadata/bottom_right_corner = true
 clip_children = 2
 z_index = 1
 polygon = PackedVector2Array(-1, -1, -1, 1, 1, 1, 1, -1)
-script = ExtResource("64_mq8x1")
+script = ExtResource("84_y1lwh")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 process_mode = 4
@@ -1455,7 +1489,7 @@ patch_margin_right = 1
 patch_margin_bottom = 1
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
-script = ExtResource("66_lu2v2")
+script = ExtResource("86_lel2b")
 
 [node name="UpLeft" type="ColorRect" parent="NinePatchRect"]
 z_index = 1

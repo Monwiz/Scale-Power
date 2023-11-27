@@ -1,8 +1,8 @@
 [gd_scene load_steps=74 format=3 uid="uid://ev1qjdhh1b7j"]
 
 [ext_resource type="Texture2D" uid="uid://b5i6ibr7rgt6x" path="res://Textures/Blocks.png" id="1_qdauv"]
-[ext_resource type="Script" path="res://Scripts/Player.gd" id="2_xpss5"]
-[ext_resource type="Script" path="res://Scripts/Bullet.gd" id="3_r3n3f"]
+[ext_resource type="Script" path="res://Scripts/Level/Player.gd" id="2_srj6s"]
+[ext_resource type="Script" path="res://Scripts/Level/Bullet.gd" id="3_2wigk"]
 [ext_resource type="Texture2D" uid="uid://dtb81cgo3178n" path="res://Textures/Player/Back.png" id="4_0n6hc"]
 [ext_resource type="Texture2D" uid="uid://bygpbdw8ituh5" path="res://Textures/Player/Front.png" id="5_m0erf"]
 [ext_resource type="Texture2D" uid="uid://doh67f3vl4p3r" path="res://Textures/Player/Left.png" id="6_j0a54"]
@@ -39,8 +39,8 @@
 [ext_resource type="Texture2D" uid="uid://bv1trvfuf8vmd" path="res://Textures/Player/Moving_right/0007.png" id="37_dsaip"]
 [ext_resource type="Texture2D" uid="uid://dv0xkd8hqywx1" path="res://Textures/Player/Moving_right/0008.png" id="38_o75hr"]
 [ext_resource type="Texture2D" uid="uid://bf7kbem7bagta" path="res://Textures/Player/Right.png" id="39_bhuqf"]
-[ext_resource type="Script" path="res://Scripts/Object.gd" id="40_63wv3"]
-[ext_resource type="Script" path="res://Scripts/Robot1.gd" id="41_dnj7q"]
+[ext_resource type="Script" path="res://Scripts/Level/Object.gd" id="40_umvmj"]
+[ext_resource type="Script" path="res://Scripts/Level/Robot1.gd" id="41_ux8t1"]
 [ext_resource type="Texture2D" uid="uid://cosdara17rdyh" path="res://Textures/Robot1/0001.png" id="42_66exm"]
 [ext_resource type="Texture2D" uid="uid://bh1nxq46x4a14" path="res://Textures/Robot1/0002.png" id="43_mhpqo"]
 [ext_resource type="Texture2D" uid="uid://c46hi2j2l7euf" path="res://Textures/Robot1/0003.png" id="44_ugr3h"]
@@ -49,9 +49,9 @@
 [ext_resource type="Texture2D" uid="uid://lrtof10mcejp" path="res://Textures/Robot1/0006.png" id="47_lg55n"]
 [ext_resource type="Texture2D" uid="uid://ordqec4uskwe" path="res://Textures/Robot1/0007.png" id="48_t5a3w"]
 [ext_resource type="Texture2D" uid="uid://c7rx7em6fl6lu" path="res://Textures/Robot1/0008.png" id="49_46fa1"]
-[ext_resource type="Script" path="res://Scripts/SizableZoneCursor.gd" id="50_i15xc"]
+[ext_resource type="Script" path="res://Scripts/Level/SizableZoneCursor.gd" id="50_obrun"]
 [ext_resource type="Texture2D" uid="uid://djr10sak6i07l" path="res://Textures/Borders.png" id="51_lu7sy"]
-[ext_resource type="Script" path="res://Scripts/NinePatchRect.gd" id="52_dqp82"]
+[ext_resource type="Script" path="res://Scripts/Level/NinePatchRect.gd" id="52_kdl1a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ipgx2"]
 texture = ExtResource("1_qdauv")
@@ -412,7 +412,7 @@ polygon = PackedVector2Array(-272, 96, 224, 96, 224, 80, 352, 80, 352, 96, 480, 
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(0, 80)
-script = ExtResource("2_xpss5")
+script = ExtResource("2_srj6s")
 bullets = 10
 
 [node name="Bullet" type="Polygon2D" parent="Player"]
@@ -422,7 +422,7 @@ z_index = -1
 position = Vector2(0, 1)
 color = Color(0, 1, 0, 1)
 polygon = PackedVector2Array(3, -0.5, -3, -0.5, -3, 0.5, 3, 0.5)
-script = ExtResource("3_r3n3f")
+script = ExtResource("3_2wigk")
 
 [node name="Area2D" type="Area2D" parent="Player/Bullet"]
 
@@ -466,7 +466,7 @@ position = Vector2(224, 68)
 mass = 2.0
 center_of_mass_mode = 1
 lock_rotation = true
-script = ExtResource("40_63wv3")
+script = ExtResource("40_umvmj")
 size = Vector2(24, 24)
 
 [node name="Sprite2D" type="Sprite2D" parent="Objects/Box"]
@@ -481,7 +481,7 @@ shape = SubResource("RectangleShape2D_sogum")
 position = Vector2(-96, 88)
 center_of_mass_mode = 1
 lock_rotation = true
-script = ExtResource("40_63wv3")
+script = ExtResource("40_umvmj")
 size = Vector2(16, 16)
 
 [node name="Sprite2D" type="Sprite2D" parent="Objects/Box2"]
@@ -505,7 +505,7 @@ polygon = PackedVector2Array(-6, 7, 0, -7, 6, 7)
 [node name="Enemy" type="CharacterBody2D" parent="Objects"]
 position = Vector2(136, 72)
 up_direction = Vector2(1, 0)
-script = ExtResource("41_dnj7q")
+script = ExtResource("41_ux8t1")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="Objects/Enemy"]
 position = Vector2(8, 0)
@@ -546,7 +546,7 @@ metadata/bottom_right_corner = false
 clip_children = 2
 z_index = 1
 polygon = PackedVector2Array(-1, -1, -1, 1, 1, 1, 1, -1)
-script = ExtResource("50_i15xc")
+script = ExtResource("50_obrun")
 
 [node name="SizableZone2" type="ColorRect" parent="SizableZones"]
 clip_children = 2
@@ -569,7 +569,7 @@ metadata/bottom_right_corner = false
 clip_children = 2
 z_index = 1
 polygon = PackedVector2Array(-1, -1, -1, 1, 1, 1, 1, -1)
-script = ExtResource("50_i15xc")
+script = ExtResource("50_obrun")
 
 [node name="SizableZone3" type="ColorRect" parent="SizableZones"]
 clip_children = 2
@@ -592,7 +592,7 @@ metadata/bottom_right_corner = false
 clip_children = 2
 z_index = 1
 polygon = PackedVector2Array(-1, -1, -1, 1, 1, 1, 1, -1)
-script = ExtResource("50_i15xc")
+script = ExtResource("50_obrun")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 process_mode = 4
@@ -611,7 +611,7 @@ patch_margin_right = 1
 patch_margin_bottom = 1
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
-script = ExtResource("52_dqp82")
+script = ExtResource("52_kdl1a")
 
 [node name="UpLeft" type="ColorRect" parent="NinePatchRect"]
 z_index = 1

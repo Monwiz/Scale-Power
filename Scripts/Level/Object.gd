@@ -1,6 +1,6 @@
 extends RigidBody2D
 
-
+var last_holding: int
 var rects: Array
 var active_rect_id: int
 @export var size: Vector2
@@ -11,7 +11,7 @@ func get_minimal_position_x():
 		var current_zone = rect.get_parent()
 		if current_zone.get_global_rect().intersects(rect.get_global_rect()):
 			while not current_zone.get_meta("left_border"):
-				for zone in $/root/Game/Level/SizableZones.get_children():
+				for zone in $/root/Game/Level/SizeZones.get_children():
 					if zone.get_global_rect().has_point(Vector2(current_zone.global_position.x-1,current_zone.global_position.y)):
 						current_zone = zone
 						break
@@ -23,7 +23,7 @@ func get_minimal_position_y():
 		var current_zone = rect.get_parent()
 		if current_zone.get_global_rect().intersects(rect.get_global_rect()):
 			while not current_zone.get_meta("upper_border"):
-				for zone in $/root/Game/Level/SizableZones.get_children():
+				for zone in $/root/Game/Level/SizeZones.get_children():
 					if zone.get_global_rect().has_point(Vector2(current_zone.global_position.x,current_zone.global_position.y-1)):
 						current_zone = zone
 						break
@@ -35,7 +35,7 @@ func get_maximal_position_x():
 		var current_zone = rect.get_parent()
 		if current_zone.get_global_rect().intersects(rect.get_global_rect()):
 			while not current_zone.get_meta("right_border"):
-				for zone in $/root/Game/Level/SizableZones.get_children():
+				for zone in $/root/Game/Level/SizeZones.get_children():
 					if zone.get_global_rect().has_point(Vector2(current_zone.global_position.x+current_zone.size.x,current_zone.global_position.y)):
 						current_zone = zone
 						break
@@ -47,7 +47,7 @@ func get_maximal_position_y():
 		var current_zone = rect.get_parent()
 		if current_zone.get_global_rect().intersects(rect.get_global_rect()):
 			while not current_zone.get_meta("bottom_border"):
-				for zone in $/root/Game/Level/SizableZones.get_children():
+				for zone in $/root/Game/Level/SizeZones.get_children():
 					if zone.get_global_rect().has_point(Vector2(current_zone.global_position.x,current_zone.global_position.y+current_zone.size.y)):
 						current_zone = zone
 						break
@@ -57,7 +57,7 @@ func get_maximal_position_y():
 func get_upper_left_corner():
 	var minimal_x: int = -9999
 	var minimal_y: int = -9999
-	for zone in $/root/Game/Level/SizableZones.get_children():
+	for zone in $/root/Game/Level/SizeZones.get_children():
 		if zone.get_global_rect().has_point(get_global_position()-size/2):
 			if zone.get_meta("upper_left_corner"):
 				minimal_x = zone.global_position.x+1
@@ -67,7 +67,7 @@ func get_upper_left_corner():
 func get_upper_right_corner():
 	var maximal_x: int = 9999
 	var minimal_y: int = -9999
-	for zone in $/root/Game/Level/SizableZones.get_children():
+	for zone in $/root/Game/Level/SizeZones.get_children():
 		if zone.get_global_rect().has_point(Vector2(get_global_position().x+size.x/2-1,get_global_position().y-size.y/2)):
 			if zone.get_meta("upper_right_corner"):
 				maximal_x = zone.global_position.x+zone.size.x-1
@@ -77,7 +77,7 @@ func get_upper_right_corner():
 func get_bottom_left_corner():
 	var minimal_x: int = -9999
 	var maximal_y: int = 9999
-	for zone in $/root/Game/Level/SizableZones.get_children():
+	for zone in $/root/Game/Level/SizeZones.get_children():
 		if zone.get_global_rect().has_point(Vector2(get_global_position().x-size.x/2,get_global_position().y+size.y/2-1)):
 			if zone.get_meta("bottom_left_corner"):
 				minimal_x = zone.global_position.x+1
@@ -87,7 +87,7 @@ func get_bottom_left_corner():
 func get_bottom_right_corner():
 	var maximal_x: int = 9999
 	var maximal_y: int = 9999
-	for zone in $/root/Game/Level/SizableZones.get_children():
+	for zone in $/root/Game/Level/SizeZones.get_children():
 		if zone.get_global_rect().has_point(get_global_position()+size/2-Vector2.ONE):
 			if zone.get_meta("bottom_right_corner"):
 				maximal_x = zone.global_position.x+zone.size.x-1
@@ -101,7 +101,7 @@ func _ready():
 	rectBase.visible = true
 	rectBase.process_mode = Node.PROCESS_MODE_INHERIT
 	#rectBase.z_index = 1
-	for zone in $/root/Game/Level/SizableZones.get_children():
+	for zone in $/root/Game/Level/SizeZones.get_children():
 		var rect = rectBase.duplicate()
 		rect.set_parent_object(self)
 		rect.global_position = round(global_position - rect.size/2)
@@ -154,8 +154,22 @@ func _process(_delta):
 			for rect in rects:
 				rect.set_corner_color(active_rect.get_corner_color(holding), holding)
 			freeze = true
-		else: freeze = false
+		else:
+			if last_holding not in [0,-1]:
+				for rect in rects:
+					rect.set_corner_color(active_rect.get_corner_color(last_holding), last_holding)
+			else:
+				if rects.any(func(x): return x.get_corner_color(1) == Color.YELLOW):
+					for rect in rects: rect.set_corner_color(Color.YELLOW, 1)
+				elif rects.any(func(x): return x.get_corner_color(2) == Color.YELLOW):
+					for rect in rects: rect.set_corner_color(Color.YELLOW, 2)
+				elif rects.any(func(x): return x.get_corner_color(3) == Color.YELLOW):
+					for rect in rects: rect.set_corner_color(Color.YELLOW, 3)
+				elif rects.any(func(x): return x.get_corner_color(4) == Color.YELLOW):
+					for rect in rects: rect.set_corner_color(Color.YELLOW, 4)
+			freeze = false
 		for rect in rects:
 			rect.size = round(size) + Vector2(1,1)
 			rect.global_position = round(global_position - rect.size/2)
 		linear_velocity.x = clamp(linear_velocity.x, -1, 1) #dirty hack, I'm not able to fix the problem behind it
+	last_holding = holding

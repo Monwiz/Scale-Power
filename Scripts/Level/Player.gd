@@ -55,11 +55,11 @@ func _process(delta):
 			stop_step_sounds()
 		return
 	if moving_vertical:
+		$Camera2D.offset.y = -32 * scale.y
+		$Camera2D.zoom = Vector2(2,2) / scale
 		if is_small:
 			scale.x = max(scale.x-delta, 0.5)
 			scale.y = max(scale.y-delta, 0.5)
-			$Camera2D.zoom = Vector2(2,2) / scale
-			$Camera2D.offset.y = -64 * scale.y
 			if scale.x == 0.5:
 				$Sprite.play("back")
 				collision_mask = 3 if can_interact_with_front_layer else 2
@@ -74,8 +74,6 @@ func _process(delta):
 		else:
 			scale.x = min(scale.x+delta, 1)
 			scale.y = min(scale.y+delta, 1)
-			$Camera2D.zoom = Vector2(2,2) / scale
-			$Camera2D.offset.y = -64 * scale.y
 			if scale.x == 1:
 				$Sprite.play("front")
 				collision_mask = 1
@@ -156,7 +154,7 @@ func shoot():
 	bullet.global_position = Vector2($Bullet.global_position.x + scale.x * (9 if looking_right else -9), $Bullet.global_position.y)
 	get_parent().add_child(bullet)
 	$Audio/Shot.play()
-	$/root/Game/GUI/Bullets/Title.text = str(bullets)
+	$/root/Game/GUI/HUD/BulletsNumber.text = str(bullets)
 	
 func hurt(): die()
 
@@ -167,7 +165,7 @@ func die():
 	collision_layer = 0
 	$GPUParticles2D.emitting = true
 	bullets = 0
-	$/root/Game/GUI/Bullets/Title.text = "0"
+	$/root/Game/GUI/HUD/BulletsNumber.text = "0"
 	$/root/Game/GUI/DeathScreen.modulate.a = 0
 	$/root/Game/GUI/DeathScreen.visible = true
 	$Audio/Death.play()
@@ -175,7 +173,7 @@ func die():
 func add_bullets(value: int):
 	bullets += value
 	$Audio/PickingUp.play()
-	$/root/Game/GUI/Bullets/Title.text = str(bullets)
+	$/root/Game/GUI/HUD/BulletsNumber.text = str(bullets)
 	
 func move(time: float, dont_return_process_after_movement: bool = false):
 	set_physics_process(false)

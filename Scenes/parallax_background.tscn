@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dlrqugbmtcyqb"]
 
-[ext_resource type="Script" path="res://Scripts/ParallaxBackground.gd" id="1_rt1gk"]
+[ext_resource type="Script" path="res://Scripts/Level/ParallaxBackground.gd" id="1_rt1gk"]
 [ext_resource type="Texture2D" uid="uid://bxbsh7cqwxfqc" path="res://Textures/Background/Hills-1.png" id="2_s2g7v"]
 [ext_resource type="Texture2D" uid="uid://cuw0ubxlj3ugb" path="res://Textures/Background/Skyscrapers.png" id="3_hmew7"]
 [ext_resource type="Texture2D" uid="uid://civd6tqprn0kl" path="res://Textures/Background/Hills-2.png" id="4_v8cfo"]

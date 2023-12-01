@@ -49,8 +49,8 @@
 [ext_resource type="Texture2D" uid="uid://lrtof10mcejp" path="res://Textures/Robot1/0006.png" id="47_lg55n"]
 [ext_resource type="Texture2D" uid="uid://ordqec4uskwe" path="res://Textures/Robot1/0007.png" id="48_t5a3w"]
 [ext_resource type="Texture2D" uid="uid://c7rx7em6fl6lu" path="res://Textures/Robot1/0008.png" id="49_46fa1"]
-[ext_resource type="Script" path="res://Scripts/Level/SizableZoneCursor.gd" id="50_obrun"]
-[ext_resource type="Texture2D" uid="uid://djr10sak6i07l" path="res://Textures/Borders.png" id="51_lu7sy"]
+[ext_resource type="Script" path="res://Scripts/Level/SizeZoneCursor.gd" id="50_cdsre"]
+[ext_resource type="Texture2D" uid="uid://djr10sak6i07l" path="res://Textures/SizeZone/Borders.png" id="51_gcspx"]
 [ext_resource type="Script" path="res://Scripts/Level/NinePatchRect.gd" id="52_kdl1a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ipgx2"]
@@ -546,7 +546,7 @@ metadata/bottom_right_corner = false
 clip_children = 2
 z_index = 1
 polygon = PackedVector2Array(-1, -1, -1, 1, 1, 1, 1, -1)
-script = ExtResource("50_obrun")
+script = ExtResource("50_cdsre")
 
 [node name="SizableZone2" type="ColorRect" parent="SizableZones"]
 clip_children = 2
@@ -569,7 +569,7 @@ metadata/bottom_right_corner = false
 clip_children = 2
 z_index = 1
 polygon = PackedVector2Array(-1, -1, -1, 1, 1, 1, 1, -1)
-script = ExtResource("50_obrun")
+script = ExtResource("50_cdsre")
 
 [node name="SizableZone3" type="ColorRect" parent="SizableZones"]
 clip_children = 2
@@ -592,7 +592,7 @@ metadata/bottom_right_corner = false
 clip_children = 2
 z_index = 1
 polygon = PackedVector2Array(-1, -1, -1, 1, 1, 1, 1, -1)
-script = ExtResource("50_obrun")
+script = ExtResource("50_cdsre")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 process_mode = 4
@@ -603,7 +603,7 @@ offset_left = 4.0
 offset_top = 73.0
 offset_right = 33.0
 offset_bottom = 95.0
-texture = ExtResource("51_lu7sy")
+texture = ExtResource("51_gcspx")
 draw_center = false
 patch_margin_left = 1
 patch_margin_top = 1

@@ -1,17 +1,18 @@
-[gd_scene load_steps=22 format=3 uid="uid://ckj0sns32t0mp"]
+[gd_scene load_steps=23 format=3 uid="uid://ckj0sns32t0mp"]
 
 [ext_resource type="Script" path="res://Scripts/GUI/MainMenu.gd" id="1_780b3"]
-[ext_resource type="Texture2D" uid="uid://mjtlv0qvx7ss" path="res://Textures/MenuBackground.png" id="2_3l3c6"]
+[ext_resource type="Texture2D" uid="uid://mjtlv0qvx7ss" path="res://Textures/GUI/MenuBackground.png" id="2_3l3c6"]
 [ext_resource type="FontFile" uid="uid://xa44nrmrg68m" path="res://Fonts/712_serif.ttf" id="3_6fdnu"]
-[ext_resource type="Texture2D" uid="uid://cwcqdrvkw03nd" path="res://Textures/Logo.png" id="4_p3b72"]
+[ext_resource type="Texture2D" uid="uid://cwcqdrvkw03nd" path="res://Textures/GUI/Logo.png" id="4_p3b72"]
 [ext_resource type="Script" path="res://Scripts/GUI/SelectLevel.gd" id="5_i0oa8"]
-[ext_resource type="Texture2D" uid="uid://dcwp606alhj73" path="res://Textures/BulletsCounter.png" id="6_akw18"]
+[ext_resource type="Texture2D" uid="uid://dcwp606alhj73" path="res://Textures/GUI/BulletsCounter.png" id="6_akw18"]
 [ext_resource type="Script" path="res://Scripts/GUI/DeathScreen.gd" id="6_q3r65"]
 [ext_resource type="Script" path="res://Scripts/GUI/PauseMenu.gd" id="7_8kxkb"]
+[ext_resource type="Texture2D" uid="uid://b35w6h7vrldiw" path="res://Textures/GUI/MonstersCounter.png" id="7_ldm8w"]
 [ext_resource type="AudioStream" uid="uid://bjf2xhxmk7fvo" path="res://Audio/HidingScreen.wav" id="7_phc7s"]
 [ext_resource type="Script" path="res://Scripts/GUI/Settings.gd" id="8_cllx1"]
 [ext_resource type="AudioStream" uid="uid://dgsgmbhrbo5c" path="res://Audio/ShowingScreen.wav" id="8_oou5u"]
-[ext_resource type="Script" path="res://Scenes/EndScreen.gd" id="10_3mn7b"]
+[ext_resource type="Script" path="res://Scripts/GUI/EndScreen.gd" id="11_rsiwj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7o5l"]
 bg_color = Color(0, 1, 0, 1)
@@ -258,7 +259,7 @@ size_flags_vertical = 10
 focus_mode = 0
 text = "Cancel"
 
-[node name="Bullets" type="Control" parent="."]
+[node name="HUD" type="Control" parent="."]
 visible = false
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 3
@@ -267,7 +268,7 @@ anchor_right = 1.0
 offset_bottom = 80.0
 grow_horizontal = 2
 
-[node name="TextureRect" type="TextureRect" parent="Bullets"]
+[node name="Bullets" type="TextureRect" parent="HUD"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 1
 offset_left = 32.0
@@ -276,7 +277,7 @@ offset_right = 96.0
 offset_bottom = 96.0
 texture = ExtResource("6_akw18")
 
-[node name="Title" type="Label" parent="Bullets"]
+[node name="BulletsNumber" type="Label" parent="HUD"]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 0
 offset_left = 96.0
@@ -285,6 +286,35 @@ offset_right = 128.0
 offset_bottom = 85.0
 text = "0"
 label_settings = SubResource("LabelSettings_5cice")
+vertical_alignment = 1
+
+[node name="Monsters" type="TextureRect" parent="HUD"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -96.0
+offset_top = 32.0
+offset_right = -32.0
+offset_bottom = 96.0
+grow_horizontal = 0
+texture = ExtResource("7_ldm8w")
+
+[node name="MonstersNumber" type="Label" parent="HUD"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -128.0
+offset_top = 34.0
+offset_right = -96.0
+offset_bottom = 85.0
+grow_horizontal = 0
+text = "0/0"
+label_settings = SubResource("LabelSettings_5cice")
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="DeathScreen" type="ColorRect" parent="."]
@@ -527,20 +557,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("10_3mn7b")
+script = ExtResource("11_rsiwj")
 
 [node name="Panel" type="Panel" parent="EndScreen"]
-custom_minimum_size = Vector2(450, 225)
+custom_minimum_size = Vector2(450, 310)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -225.0
-offset_top = -100.0
-offset_right = 225.0
-offset_bottom = 100.0
+offset_left = -256.0
+offset_top = -150.0
+offset_right = 256.0
+offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_en8d1")
@@ -548,19 +578,34 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_7nspo")
 
 [node name="Text" type="Label" parent="EndScreen/Panel"]
 custom_minimum_size = Vector2(0, 48)
-layout_mode = 2
-offset_left = 20.0
-offset_right = 230.0
-offset_bottom = 48.0
-text = "Congratulations on
-beating the game! Sorry
-that this game was short,
-I spent most of the time
-by fixing bugs from the
-size mechanic."
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 8.0
+offset_bottom = 198.0
+grow_horizontal = 2
+text = "Congratulations on beating the game! Sorry that this game was short, I spent most of the time by fixing bugs from the size mechanic (which was not funny). New levels will come out later."
 label_settings = SubResource("LabelSettings_jb73q")
-horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Time" type="Label" parent="EndScreen/Panel"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -137.0
+offset_bottom = -56.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "This text should be changed via a script."
+label_settings = SubResource("LabelSettings_jb73q")
 vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="Close" type="Button" parent="EndScreen/Panel"]
 custom_minimum_size = Vector2(0, 48)
@@ -574,7 +619,7 @@ grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 10
 focus_mode = 0
-text = "Cancel"
+text = "Close"
 
 [node name="Rect" type="TextureRect" parent="."]
 anchors_preset = 15

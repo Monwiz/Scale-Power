@@ -1,4 +1,4 @@
-[gd_scene load_steps=98 format=3 uid="uid://cpdeghhisnwpa"]
+[gd_scene load_steps=97 format=3 uid="uid://cpdeghhisnwpa"]
 
 [ext_resource type="Texture2D" uid="uid://b5i6ibr7rgt6x" path="res://Textures/Blocks.png" id="1_1tama"]
 [ext_resource type="FontFile" uid="uid://xa44nrmrg68m" path="res://Fonts/712_serif.ttf" id="2_xsn4w"]
@@ -402,9 +402,6 @@ color_initial_ramp = SubResource("GradientTexture1D_v5hpo")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_s2rht"]
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_4sr15"]
-normal = Vector2(1, 0)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_cbkkf"]
 atlas = ExtResource("1_1tama")
 region = Rect2(80, 16, 16, 16)
@@ -586,7 +583,7 @@ occluder = SubResource("OccluderPolygon2D_1krts")
 collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FrontLayer/StaticBody2D"]
-polygon = PackedVector2Array(-864, 96, 224, 96, 224, 80, 592, 80, 592, 96, 1024.06, 96, 1024, 80, 1072, 80, 1072, 64, 1168, 64, 1168, 48, 1248, 48, 1248, 32, 1312, 32, 1312, 48, 1360, 48, 1360, 32, 1376, 32, 1376, 16, 1472, 16, 1472, 31, 1408, 32, 1408, 64, 1472, 64, 1472, 96, 2464, 96, 2464, 112, 2480, 112, 2480, 144, 2496, 144, 2496, 192, 2512, 192, 2512, 368, -864, 368)
+polygon = PackedVector2Array(-864, 96, -271, -6, -271, 96, 224, 96, 224, 80, 592, 80, 592, 96, 1024.06, 96, 1024, 80, 1072, 80, 1072, 64, 1168, 64, 1168, 48, 1248, 48, 1248, 32, 1312, 32, 1312, 48, 1360, 48, 1360, 32, 1376, 32, 1376, 16, 1472, 16, 1472, 31, 1408, 32, 1408, 64, 1472, 64, 1472, 96, 2464, 96, 2464, 112, 2480, 112, 2480, 144, 2496, 144, 2496, 192, 2512, 192, 2512, 368, -864, 368)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="FrontLayer/StaticBody2D"]
 polygon = PackedVector2Array(2304, 48, 2304, 64, 2352, 64, 2352, 49, 2353, 48, 2400, 48, 2400, 33, 2401, 32, 2448, 32, 2448, 17, 2449, 16, 2623, 16, 2624, 17, 2624, 32, 2752, 32, 2752, 16, 2624, 16, 2624, 0, 2448, 0, 2448, 16, 2400, 16, 2400, 32, 2352, 32, 2352, 48)
@@ -822,7 +819,6 @@ vertical_alignment = 1
 position = Vector2(3016, 16)
 disable_mode = 2
 script = ExtResource("3_bykvj")
-level_id = 1
 needed_number_of_destroyed_enemies = 2
 
 [node name="Door" type="AnimatedSprite2D" parent="FrontLayer/TheEnd"]
@@ -880,7 +876,7 @@ shape = SubResource("RectangleShape2D_4xe4v")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 process_mode = 3
-offset = Vector2(0, -64)
+offset = Vector2(0, -32)
 zoom = Vector2(2, 2)
 limit_left = -864
 limit_top = -652
@@ -923,15 +919,6 @@ current = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 120)
 shape = SubResource("WorldBoundaryShape2D_s2rht")
-
-[node name="WorldBorder" type="StaticBody2D" parent="."]
-position = Vector2(0, 112)
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBorder"]
-position = Vector2(-272, -20)
-shape = SubResource("WorldBoundaryShape2D_4sr15")
 
 [node name="Objects" type="Node" parent="."]
 
@@ -1080,7 +1067,7 @@ texture = SubResource("AtlasTexture_44awg")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/BulletSet2"]
 shape = SubResource("RectangleShape2D_7spum")
 
-[node name="SizableZones" type="Node" parent="."]
+[node name="SizeZones" type="Node" parent="."]
 
 [connection signal="body_entered" from="FrontLayer/TheEnd/Area2D" to="FrontLayer/TheEnd" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="Player/Bullet/Area2D" to="Player/Bullet" method="_on_area_2d_body_entered"]

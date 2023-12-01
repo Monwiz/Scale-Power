@@ -1,7 +1,7 @@
 extends Control
 
 func _on_sfx_volume_value_changed(value):
-	if value == -25: AudioServer.set_bus_mute(2, true)
+	if value == -20: AudioServer.set_bus_mute(2, true)
 	else:
 		AudioServer.set_bus_mute(2, false)
 		AudioServer.set_bus_volume_db(2, value)

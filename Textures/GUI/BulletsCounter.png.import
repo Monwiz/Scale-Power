@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mjtlv0qvx7ss"
-path="res://.godot/imported/MenuBackground.png-da65f3cc3f5b3145d4b67ada105a6a1d.ctex"
+uid="uid://dcwp606alhj73"
+path="res://.godot/imported/BulletsCounter.png-ad802d971511cf2591a24adc43b1313e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/MenuBackground.png"
-dest_files=["res://.godot/imported/MenuBackground.png-da65f3cc3f5b3145d4b67ada105a6a1d.ctex"]
+source_file="res://Textures/GUI/BulletsCounter.png"
+dest_files=["res://.godot/imported/BulletsCounter.png-ad802d971511cf2591a24adc43b1313e.ctex"]
 
 [params]
 

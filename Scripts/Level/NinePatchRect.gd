@@ -12,16 +12,22 @@ func get_holding(): return holding
 func set_holding(value: int): holding = value
 func get_corner_color(corner: int):
 	match corner:
-		1: return $UpLeft.color
-		2: return $UpRight.color
-		3: return $DownLeft.color
-		4: return $DownRight.color
+		1: return $UpLeft.modulate
+		2: return $UpRight.modulate
+		3: return $DownLeft.modulate
+		4: return $DownRight.modulate
 func set_corner_color(color: Color, corner: int):
 	match corner:
-		1: $UpLeft.color = color
-		2: $UpRight.color = color
-		3: $DownLeft.color = color
-		4: $DownRight.color = color
+		1: $UpLeft.modulate = color
+		2: $UpRight.modulate = color
+		3: $DownLeft.modulate = color
+		4: $DownRight.modulate = color
+		
+func reset_corner_colors():
+	$UpLeft.modulate = Color.WHITE
+	$UpRight.modulate = Color.WHITE
+	$DownLeft.modulate = Color.WHITE
+	$DownRight.modulate = Color.WHITE
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -40,42 +46,41 @@ func _process(_delta):
 			if $UpLeft.get_global_rect().has_point(mpos):
 				if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 					holding = 1
-					$UpLeft.color = Color.ORANGE
+					$UpLeft.modulate = Color.ORANGE
 				else:
-					$UpLeft.color = Color.YELLOW
+					$UpLeft.modulate = Color.YELLOW
 			elif $UpRight.get_global_rect().has_point(mpos):
 				if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 					holding = 2
-					$UpRight.color = Color.ORANGE
+					$UpRight.modulate = Color.ORANGE
 				else:
-					$UpRight.color = Color.YELLOW
+					$UpRight.modulate = Color.YELLOW
 			elif $DownLeft.get_global_rect().has_point(mpos):
 				if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 					holding = 3
-					$DownLeft.color = Color.ORANGE
+					$DownLeft.modulate = Color.ORANGE
 				else:
-					$DownLeft.color = Color.YELLOW
+					$DownLeft.modulate = Color.YELLOW
 			elif $DownRight.get_global_rect().has_point(mpos):
 				if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 					holding = 4
-					$DownRight.color = Color.ORANGE
+					$DownRight.modulate = Color.ORANGE
 				else:
-					$DownRight.color = Color.YELLOW
+					$DownRight.modulate = Color.YELLOW
 			else:
 				if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 					holding = -1
-				$UpLeft.color = Color.WHITE
-				$UpRight.color = Color.WHITE
-				$DownLeft.color = Color.WHITE
-				$DownRight.color = Color.WHITE
-		elif Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT): holding = -1
+				reset_corner_colors()
+		else:
+			if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT): holding = -1
+			reset_corner_colors()
 	else:
 		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 			match holding:
-				1: $UpLeft.color = Color.WHITE
-				2: $UpRight.color = Color.WHITE
-				3: $DownLeft.color = Color.WHITE
-				4: $DownRight.color = Color.WHITE
+				1: $UpLeft.modulate = Color.WHITE
+				2: $UpRight.modulate = Color.WHITE
+				3: $DownLeft.modulate = Color.WHITE
+				4: $DownRight.modulate = Color.WHITE
 			holding = 0
 	var min_x = parent_object.get_minimal_position_x()
 	var min_y = parent_object.get_minimal_position_y()

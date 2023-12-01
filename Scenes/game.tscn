@@ -24,6 +24,7 @@ scroll_ignore_camera_zoom = true
 [node name="Audio" type="Node" parent="."]
 
 [node name="Music" type="AudioStreamPlayer" parent="Audio"]
+bus = &"Music"
 script = ExtResource("4_5bldk")
 
 [node name="Click" type="AudioStreamPlayer" parent="Audio"]

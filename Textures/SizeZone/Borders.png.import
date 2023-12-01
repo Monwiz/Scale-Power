@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dcwp606alhj73"
-path="res://.godot/imported/BulletsCounter.png-181d6d0d119e76d81307f579e979561d.ctex"
+uid="uid://djr10sak6i07l"
+path="res://.godot/imported/Borders.png-12e4a338b3b024a6557a8cea5e0393e7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/BulletsCounter.png"
-dest_files=["res://.godot/imported/BulletsCounter.png-181d6d0d119e76d81307f579e979561d.ctex"]
+source_file="res://Textures/SizeZone/Borders.png"
+dest_files=["res://.godot/imported/Borders.png-12e4a338b3b024a6557a8cea5e0393e7.ctex"]
 
 [params]
 
